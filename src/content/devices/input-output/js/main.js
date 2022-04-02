@@ -80,7 +80,13 @@ function gotStream(stream) {
   window.stream = stream; // make stream available to console
   videoElement.srcObject = stream;
   // Refresh button list in case labels have become available
+  element = Document.getElementById('vid')
+  element.style.width = stream.getVideoTracks()[0].getSettings().width
+  element.style.height=stream.getVideoTracks()[0].getSettings().height
+  
   return navigator.mediaDevices.enumerateDevices();
+  
+  
 }
 
 function handleError(error) {
