@@ -92,10 +92,12 @@ function gotStream(stream) {
   var element = document.getElementById('vid');
   
   if (getOrientation() === "Landscape") {
+    console.log(getOrientation())
     element.style.width = stream.getVideoTracks()[0].getSettings().width + "px";
     element.style.height=stream.getVideoTracks()[0].getSettings().height + "px";
   }
   else if (getOrientation()=== "Portrait"){
+    console.log(getOrientation())
     element.style.width = stream.getVideoTracks()[0].getSettings().height + "px";
     element.style.height=stream.getVideoTracks()[0].getSettings().width + "px";
   }
@@ -132,3 +134,9 @@ function start() {
 videoSelect.onchange = start;
 
 start();
+
+function resize(){ 
+  console.log('yo')
+}
+
+window.onresize = start
