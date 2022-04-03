@@ -24,53 +24,38 @@
 
     <link rel="icon" sizes="192x192" href="../../../images/webrtc-icon-192x192.png">
     <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="../../../css/main.css">
+    <!--<link rel="stylesheet" href="../../../css/main.css">-->
 
-    <style>
-        div.select {
-            display: inline-block;
-            margin: 0 0 1em 0;
-        }
 
-        p.small {
-            font-size: 0.7em;
-        }
-
-        label {
-            width: 12em;
-            display: inline-block;
-        }
-    </style>
 
 </head>
 
 <body style="margin:0; padding: 0">
-
-
-
-    
-
-
-
-
-    
 
   
  <div id = "video-box" style=" position: relative;" class="container">
 
 
     <video id='vid' style= "position: absolute;top: 0;left: 0;opacity: 0.8;z-index: 1"  autoplay playsinline></video>
-    <div style="z-index: 9; position: absolute; width: 80%; left: 10%; text-align:center;  color:white; opacity:1; background-color: rgba(0, 0, 0, 1); font-weight: bold" contenteditable="true"> hello world </div>
+    <div id='caption' style="z-index: 9; position: absolute; width: 80%; left: 10%; text-align:center;  color:white; opacity:1; background-color: rgba(0, 0, 0, 1); font-weight: bold" contenteditable="true"> hello world </div>
    
 </div>
 <div class="select">
     <label for="videoSource">Video source: </label><select id="videoSource"></select>
 </div>
+<button id="snapshot">snapshot</button>
+<div>
+<canvas id = 'mycanvas'></canvas>
+</div>
+
  
 
 <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+<script src="js/dom-to-image.min.js"></script>
 <script src="js/main.js" async></script>
 
-<script src="../../../js/lib/ga.js"></script>
+
+
+</script>
 </body>
 </html>

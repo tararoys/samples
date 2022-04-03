@@ -146,3 +146,36 @@ function resize(){
 }
 
 window.onresize = start
+
+
+function twice(){
+  take_snapshot();
+  take_snapshot();
+}
+
+function take_snapshot(){
+  var node = document.getElementById('caption');
+  const video = document.querySelector('video');
+const canvas = window.canvas = document.getElementById('mycanvas');
+var thing  = document.getElementById('video-box');
+console.log(thing.offsetWidth);
+console.log(thing.offsetHeight);
+  canvas.width = thing.offsetWidth;
+  canvas.height = thing.offsetHeight;
+  canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+
+  domtoimage.toPng(node)
+    .then(function (dataUrl) {
+        var img = new Image();
+        img.src = dataUrl;
+        canvas.getContext('2d').drawImage(img,0,0);
+    })
+    .catch(function (error) {
+        console.error('oops, something went wrong!', error);
+    });
+}
+
+var shutter = document.getElementById('snapshot')
+
+shutter.onclick = twice
+
