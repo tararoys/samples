@@ -77,6 +77,11 @@ function changeAudioDestination() {
   attachSinkId(videoElement, audioDestination);
 }
 
+function getOrientation(){
+  var orientation = window.innerWidth > window.innerHeight ? "Landscape" : "Portrait";
+  return orientation;
+}
+
 function gotStream(stream) {
   window.stream = stream; // make stream available to console
   videoElement.srcObject = stream;
@@ -86,8 +91,15 @@ function gotStream(stream) {
   // Refresh button list in case labels have become available
   var element = document.getElementById('vid');
   
-  element.style.width = stream.getVideoTracks()[0].getSettings().width + "px";
-  element.style.height=stream.getVideoTracks()[0].getSettings().height + "px";
+  if (getOrientation() === "Landscape") {
+    element.style.width = stream.getVideoTracks()[0].getSettings().width + "px";
+    element.style.height=stream.getVideoTracks()[0].getSettings().height + "px";
+  }
+  else if (getOrientation()=== "Portrait"){
+    element.style.width = stream.getVideoTracks()[0].getSettings().height + "px";
+    element.style.height=stream.getVideoTracks()[0].getSettings().width + "px";
+  }
+
   console.log("width"+ element.style.width);
   console.log("height" + element.style.height);
   console.log(navigator.mediaDevices.enumerateDevices());
