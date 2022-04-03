@@ -41,6 +41,7 @@ function gotDevices(deviceInfos) {
       console.log('Some other kind of source/device: ', deviceInfo);
     }
   }
+
   selectors.forEach((select, selectorIndex) => {
     if (Array.prototype.slice.call(select.childNodes).some(n => n.value === values[selectorIndex])) {
       select.value = values[selectorIndex];
@@ -79,13 +80,18 @@ function changeAudioDestination() {
 function gotStream(stream) {
   window.stream = stream; // make stream available to console
   videoElement.srcObject = stream;
+
+  console.log(stream)
+  console.log( stream.getVideoTracks()[0].getSettings().width)
   // Refresh button list in case labels have become available
-  element = Document.getElementById('vid')
-  element.style.width = stream.getVideoTracks()[0].getSettings().width
-  element.style.height=stream.getVideoTracks()[0].getSettings().height
+  var element = document.getElementById('vid');
   
+  element.style.width = stream.getVideoTracks()[0].getSettings().width + "px";
+  element.style.height=stream.getVideoTracks()[0].getSettings().height + "px";
+  console.log("width"+ element.style.width);
+  console.log("height" + element.style.height);
+  console.log(navigator.mediaDevices.enumerateDevices());
   return navigator.mediaDevices.enumerateDevices();
-  
   
 }
 
