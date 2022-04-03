@@ -89,17 +89,22 @@ function gotStream(stream) {
   console.log(stream)
   console.log( stream.getVideoTracks()[0].getSettings().width)
   // Refresh button list in case labels have become available
-  var element = document.getElementById('vid');
+  var element = document.getElementById('video-box');
+  var element2 = document.getElementById('vid'); 
   
   if (getOrientation() === "Landscape") {
     console.log(getOrientation())
     element.style.width = stream.getVideoTracks()[0].getSettings().width + "px";
     element.style.height=stream.getVideoTracks()[0].getSettings().height + "px";
+    element2.style.width = element.style.width;
+    element2.style.height = element.style.height;
   }
   else if (getOrientation()=== "Portrait"){
     console.log(getOrientation())
     element.style.width = stream.getVideoTracks()[0].getSettings().height + "px";
     element.style.height=stream.getVideoTracks()[0].getSettings().width + "px";
+    element2.style.width = element.style.width;
+    element2.style.height = element.style.height;
   }
 
   console.log("width"+ element.style.width);
