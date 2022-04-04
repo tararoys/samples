@@ -212,7 +212,7 @@ shutter.onclick = take_snapshot
 
 //shutter.addEventListener('touchend', take_snapshot);
 
-shutter.addEventListener("touchend", tapHandler);
+//shutter.addEventListener("touchend", tapHandler);
 
 var tapedTwice = false;
 
