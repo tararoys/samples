@@ -208,6 +208,8 @@ referencenode.parentNode.insertBefore(container, referencenode.nextSibling);
 }
 
 var shutter = document.getElementById('vid')
+var button = document.getElementById('snapshot')
+button.onclick = take_snapshot
 
 shutter.onclick = take_snapshot
 
