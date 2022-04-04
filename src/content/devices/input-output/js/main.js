@@ -167,13 +167,42 @@ console.log("button was clicked");
         var img = new Image();
         img.src = dataUrl;
         img.onload = function(){
-          canvas.getContext('2d').drawImage(img,0,0);
-        }
+          canvas.getContext('2d').drawImage(img,0,0)
+          requestAnimationFrame(() => {
+            // This function will run in the next animation frame, *right before*
+            // the browser will update the pixels on the display (paint).
+      
+              // To ensure that we run logic *after* the display has been
+              // updated, an option is to queue yet one more callback
+              // using setTimeout.
+              setTimeout(() => {
+                  // At this point, the page rendering has been updated with the
+                  // `drawImage` result (or a later frame's result, see below).
+                  var meme = new Image();
+meme.id = 'pic';
+meme.src=canvas.toDataURL();
+//document.body.appendChild(meme);
+var container = document.createElement('div');
+container.appendChild(meme);
+var referencenode =  document.getElementById('can')
+referencenode.parentNode.insertBefore(container, referencenode.nextSibling);
+
+              }, 0);
+            });
+          }
+          
+
+          
+
+
+        
         
     })
     .catch(function (error) {
         console.error('oops, something went wrong!', error);
     });
+
+
 
 }
 
@@ -183,3 +212,7 @@ shutter.onclick = take_snapshot
 
 
   // code that will run when the DOMContentLoaded event triggers  
+//var meme = new Image();
+//meme.id = 'pic';
+//meme.src=canvas.toDataURL();
+//document.body.appendChild(meme);
