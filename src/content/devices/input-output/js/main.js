@@ -168,6 +168,7 @@ console.log("button was clicked");
         img.src = dataUrl;
         img.onload = function(){
           canvas.getContext('2d').drawImage(img,0,0)
+          
           requestAnimationFrame(() => {
             // This function will run in the next animation frame, *right before*
             // the browser will update the pixels on the display (paint).
