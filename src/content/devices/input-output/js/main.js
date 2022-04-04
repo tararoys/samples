@@ -210,7 +210,22 @@ var shutter = document.getElementById('vid')
 
 shutter.onclick = take_snapshot
 
-shutter.addEventListener('touchend', take_snapshot);
+//shutter.addEventListener('touchend', take_snapshot);
+
+shutter.addEventListener("touchend", tapHandler);
+
+var tapedTwice = false;
+
+function tapHandler(event) {
+    if(!tapedTwice) {
+        tapedTwice = true;
+        setTimeout( function() { tapedTwice = false; }, 300 );
+        return false;
+    }
+    event.preventDefault();
+    //action on double tap goes below
+    take_snapshot();
+ }
 
 
   // code that will run when the DOMContentLoaded event triggers  
