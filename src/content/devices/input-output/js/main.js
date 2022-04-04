@@ -206,9 +206,11 @@ referencenode.parentNode.insertBefore(container, referencenode.nextSibling);
 
 }
 
-var shutter = document.getElementById('snapshot')
+var shutter = document.getElementById('vid')
 
 shutter.onclick = take_snapshot
+
+shutter.addEventListener('touchend', take_snapshot);
 
 
   // code that will run when the DOMContentLoaded event triggers  
