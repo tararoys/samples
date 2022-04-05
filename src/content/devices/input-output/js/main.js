@@ -9,6 +9,8 @@
 
 'use strict';
 
+var image_array = [];
+
 const videoElement = document.querySelector('video');
 //const audioInputSelect = document.querySelector('select#audioSource');
 //const audioOutputSelect = document.querySelector('select#audioOutput');
@@ -181,7 +183,18 @@ console.log("button was clicked");
                   // `drawImage` result (or a later frame's result, see below).
                   var meme = new Image();
 meme.id = 'pic';
-meme.src=canvas.toDataURL();
+var image_string = canvas.toDataURL();
+meme.src= image_string;
+image_array.push(image_string);
+
+
+
+
+var camera_roll = JSON.stringify(image_array);
+
+window.localStorage.setItem("camera_roll", camera_roll);
+
+
 //document.body.appendChild(meme);
 var container = document.createElement('div');
 container.appendChild(meme);
@@ -230,6 +243,32 @@ function tapHandler(event) {
     take_snapshot();
  }
 
+ document.body.onload = function(){
+  var saved_picture_string = window.localStorage.getItem('camera_roll');
+  if (saved_picture_string === null){
+    image_array = [];
+  }
+  else{
+  console.log('saved_picture_string' + saved_picture_string)
+  var saved_picture_array = JSON.parse(saved_picture_string);
+  image_array = saved_picture_array;
+  console.log(saved_picture_array.length);
+  
+  for (var i = 0; i<saved_picture_array.length; i++){
+    console.log(i + " iiiiii");
+    var meme = new Image();
+meme.id = 'pic';
+var image_string = saved_picture_array[i];
+meme.src=image_string;
+var container = document.createElement('div');
+container.appendChild(meme);
+var referencenode =  document.getElementById('can')
+referencenode.parentNode.insertBefore(container, referencenode.nextSibling);
+
+  }
+}
+
+ }
 
   // code that will run when the DOMContentLoaded event triggers  
 //var meme = new Image();
