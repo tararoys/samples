@@ -186,6 +186,9 @@ meme.id = 'pic';
 var image_string = canvas.toDataURL();
 meme.src= image_string;
 image_array.push(image_string);
+if (image_array.length > 5){
+  image_array.shift();
+}
 
 
 
