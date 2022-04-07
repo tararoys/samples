@@ -248,9 +248,9 @@ if (image_array.length > 5){ // added because localstorage limits the amount I c
 
 
 
-var camera_roll = JSON.stringify(image_array);
+//var camera_roll = JSON.stringify(image_array);
 
-window.localStorage.setItem("camera_roll", camera_roll);
+//window.localStorage.setItem("camera_roll", camera_roll);
 
 
 //document.body.appendChild(meme);
@@ -301,7 +301,7 @@ function tapHandler(event) {
     take_snapshot();
  }
 
- document.body.onload = function(){
+ /**document.body.onload = function(){
   var saved_picture_string = window.localStorage.getItem('camera_roll');
   if (saved_picture_string === null){
     image_array = [];
@@ -326,7 +326,7 @@ referencenode.parentNode.insertBefore(container, referencenode.nextSibling);
   }
 }
 
- }
+ }*//
 
   // code that will run when the DOMContentLoaded event triggers  
 //var meme = new Image();
