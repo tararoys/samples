@@ -37,8 +37,8 @@
 
     <a id="photo"><video id='vid' style= "position: absolute;top: 0;left: 0;opacity: 0.8;z-index: 1"  autoplay playsinline></video></a>
     <!--<textarea id="caption" style="z-index: 9; position: absolute; width: 80%; left: 10%; text-align:center;  color:white; opacity:1; background-color: rgba(0, 0, 0, 1); font-weight: bold">hello world</textarea>-->
-    <textarea id='caption' oninput="this.style.height = 'auto'; this.style.height = (this.scrollHeight) + 'px';" style="    border: none;
-    outline: none; z-index: 9; resize:both; position: absolute; font-size: x-large; width: 100%;  text-align:center;  color:white; opacity:1; background-color: rgba(0, 0, 0, 1); font-weight: bold" > Tap here to edit this caption, and click once (on desktop) or  tap (on mobile) the video feed to take a picture</textarea>
+    <textarea id='caption' row = "1" oninput="this.style.height = 'auto'; this.style.height = (this.scrollHeight) + 'px';" style="  border: none;
+    outline: none; z-index: 9; resize:both; position: absolute; font-size: x-large; width: 100%;  text-align:center;  color:white; opacity:1; background-color: rgba(0, 0, 0, 1); font-weight: bold; padding: 0%;" >Write here and tap on the picture to save it.</textarea>
    
 </div>
 <div class="select">
@@ -309,6 +309,11 @@ function tapHandler(event) {
     //action on double tap goes below
     take_snapshot();
  }
+
+document.body.onload = function(){
+  var temp = document.getElementById('caption');
+  temp.select();
+}
 
  /**document.body.onload = function(){
   var saved_picture_string = window.localStorage.getItem('camera_roll');
