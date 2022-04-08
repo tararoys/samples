@@ -37,7 +37,8 @@
 
     <a id="photo"><video id='vid' style= "position: absolute;top: 0;left: 0;opacity: 0.8;z-index: 1"  autoplay playsinline></video></a>
     <!--<textarea id="caption" style="z-index: 9; position: absolute; width: 80%; left: 10%; text-align:center;  color:white; opacity:1; background-color: rgba(0, 0, 0, 1); font-weight: bold">hello world</textarea>-->
-    <div id='caption' style="z-index: 9; position: absolute; font-size: x-large; width: 100%;  text-align:center;  color:white; opacity:1; background-color: rgba(0, 0, 0, 1); font-weight: bold" contenteditable="true"> Tap here to edit this caption, and click once (on desktop) or  tap (on mobile) the video feed to take a picture</div>
+    <textarea id='caption' oninput="this.style.height = 'auto'; this.style.height = (this.scrollHeight) + 'px';" style="    border: none;
+    outline: none; z-index: 9; resize:both; position: absolute; font-size: x-large; width: 100%;  text-align:center;  color:white; opacity:1; background-color: rgba(0, 0, 0, 1); font-weight: bold" > Tap here to edit this caption, and click once (on desktop) or  tap (on mobile) the video feed to take a picture</textarea>
    
 </div>
 <div class="select">
@@ -280,6 +281,8 @@ referencenode.parentNode.insertBefore(container, referencenode.nextSibling);
     temp.select();
     document.execCommand('copy');
     temp.remove();
+    var temp2 = document.getElementById('caption');
+    temp2.select();
 
 
 }
