@@ -163,22 +163,22 @@ if (mobileCheck()){
   
   if (getOrientation() === "Landscape") {
     console.log(getOrientation())
-    element.style.width = stream.getVideoTracks()[0].getSettings().width/2 + "px";
-    element.style.height=stream.getVideoTracks()[0].getSettings().height/2 + "px";
+    element.style.width = stream.getVideoTracks()[0].getSettings().width + "px";
+    element.style.height=stream.getVideoTracks()[0].getSettings().height + "px";
     element2.style.width = element.style.width;
     element2.style.height = element.style.height;
   }
   else if (getOrientation()=== "Portrait"){
     console.log(getOrientation())
-    element.style.width = stream.getVideoTracks()[0].getSettings().height/2 + "px";
-    element.style.height=stream.getVideoTracks()[0].getSettings().width/2 + "px";
+    element.style.width = stream.getVideoTracks()[0].getSettings().height + "px";
+    element.style.height=stream.getVideoTracks()[0].getSettings().width + "px";
     element2.style.width = element.style.width;
     element2.style.height = element.style.height;
   }
 }
 else{
-  element.style.width = stream.getVideoTracks()[0].getSettings().width/2 + "px";
-  element.style.height=stream.getVideoTracks()[0].getSettings().height/2 + "px";
+  element.style.width = stream.getVideoTracks()[0].getSettings().width + "px";
+  element.style.height=stream.getVideoTracks()[0].getSettings().height + "px";
   element2.style.width = element.style.width;
   element2.style.height = element.style.height;
 
@@ -259,10 +259,10 @@ console.log("button was clicked");
 meme.id = 'pic';
 var image_string = canvas.toDataURL();
 meme.src= image_string;
-image_array.push(image_string);
-if (image_array.length > 5){ // added because localstorage limits the amount I can put in it, so I can only realistically save the last five pictures.
-  image_array.shift();
-}
+//image_array.push(image_string);
+//if (image_array.length > 5){ // added because localstorage limits the amount I can put in it, so I can only realistically save the last five pictures.
+//  image_array.shift();
+//}
 
 
 
