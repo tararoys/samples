@@ -45,11 +45,16 @@
     <label for="videoSource">Video source: </label><select id="videoSource"></select>
 </div>
 <button id="snapshot">take snapshot</button>
+<button id="image1"> image 1</button>
+<button id="image2"> image 2</button>
+<button id="diffit"> diffit </button>
 <div id = "can">
 <canvas id = 'mycanvas' style="display:none" ></canvas>
 </div>
-
- 
+<div>
+  <img id="myimage1" src="_">
+  <img id="myimage2" src="_">
+</div> 
 
 <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
 <script >/*! dom-to-image 10-06-2017 */
@@ -223,7 +228,8 @@ function resize(){
 
 window.onresize = start()
 
-function take_snapshot(){
+function take_snapshot(image){
+
   var node = document.getElementById('caption');
   const video = document.querySelector('video');
 const canvas = window.canvas = document.getElementById('mycanvas');
@@ -254,16 +260,17 @@ console.log("button was clicked");
                   // At this point, the page rendering has been updated with the
                   // `drawImage` result (or a later frame's result, see below).
                   var meme = new Image();
-meme.id = 'pic';
+
+meme = document.getElementById(image)
 var image_string = canvas.toDataURL();
 meme.src= image_string;
+
+meme.id = image;
+
 //image_array.push(image_string);
 //if (image_array.length > 5){ // added because localstorage limits the amount I can put in it, so I can only realistically save the last five pictures.
 //  image_array.shift();
 //}
-
-
-
 
 //var camera_roll = JSON.stringify(image_array);
 
@@ -298,9 +305,14 @@ referencenode.parentNode.insertBefore(container, referencenode.nextSibling);
 
 var shutter = document.getElementById('vid')
 var button = document.getElementById('snapshot')
-button.onclick = take_snapshot
+var button_image_1 = document.getElementById('image1')
+var button_image_2 = document.getElementById('image2')
 
-shutter.onclick = take_snapshot
+//button.setAttribute('onclick' , "take_snapshot('hi')")
+button_image_1.setAttribute('onclick' , "take_snapshot('myimage1')")
+button_image_2.setAttribute('onclick' , "take_snapshot('myimage2')")
+
+//shutter.onclick = take_snapshot
 
 //shutter.addEventListener('touchend', take_snapshot);
 
@@ -378,12 +390,12 @@ const defaultOptions = {
 function pixelmatch(img1, img2, output, width, height, options) {
 
     if (!isPixelData(img1) || !isPixelData(img2) || (output && !isPixelData(output)))
-        throw new Error(‘Image data: Uint8Array, Uint8ClampedArray or Buffer expected.’);
+        throw new Error('Image data: Uint8Array, Uint8ClampedArray or Buffer expected.');
 
     if (img1.length !== img2.length || (output && output.length !== img1.length))
-        throw new Error(‘Image sizes do not match.’);
+        throw new Error('Image sizes do not match.');
 
-    if (img1.length !== width * height * 4) throw new Error(‘Image data size does not match width/height.’);
+    if (img1.length !== width * height * 4) throw new Error('Image data size does not match width/height.');
 
     options = Object.assign({}, defaultOptions, options);
 
@@ -419,7 +431,7 @@ function pixelmatch(img1, img2, output, width, height, options) {
 
             // the color difference is above the threshold
             if (Math.abs(delta) > maxDelta) {
-                // check it’s a real rendering difference or just anti-aliasing
+                // check it's a real rendering difference or just anti-aliasing
                 if (!options.includeAA && (antialiased(img1, x, y, width, height, img2) ||
                                            antialiased(img2, x, y, width, height, img1))) {
                     // one of the pixels is anti-aliasing; draw as yellow and do not count as difference
@@ -451,7 +463,7 @@ function isPixelData(arr) {
 }
 
 // check if a pixel is likely a part of anti-aliasing;
-// based on “Anti-aliased Pixel and Intensity Slope Detector” paper by V. Vysniauskas, 2009
+// based on "Anti-aliased Pixel and Intensity Slope Detector" paper by V. Vysniauskas, 2009
 
 function antialiased(img, x1, y1, width, height, img2) {
     const x0 = Math.max(x1 - 1, 0);
@@ -475,7 +487,7 @@ function antialiased(img, x1, y1, width, height, img2) {
             // count the number of equal, darker and brighter adjacent pixels
             if (delta === 0) {
                 zeroes++;
-                // if found more than 2 equal siblings, it’s definitely not anti-aliasing
+                // if found more than 2 equal siblings, it's definitely not anti-aliasing
                 if (zeroes > 2) return false;
 
             // remember the darkest pixel
@@ -493,7 +505,7 @@ function antialiased(img, x1, y1, width, height, img2) {
         }
     }
 
-    // if there are no both darker and brighter pixels among siblings, it’s not anti-aliasing
+    // if there are no both darker and brighter pixels among siblings, it's not anti-aliasing
     if (min === 0 || max === 0) return false;
 
     // if either the darkest or the brightest pixel has 3+ equal siblings in both images
@@ -529,8 +541,8 @@ function hasManySiblings(img, x1, y1, width, height) {
     return false;
 }
 
-// calculate color difference according to the paper “Measuring perceived color difference
-// using YIQ NTSC transmission color space in mobile applications” by Y. Kotsarenko and F. Ramos
+// calculate color difference according to the paper "Measuring perceived color difference
+// using YIQ NTSC transmission color space in mobile applications" by Y. Kotsarenko and F. Ramos
 
 function colorDelta(img1, img2, k, m, yOnly) {
     let r1 = img1[k + 0];
@@ -599,59 +611,58 @@ function drawGrayPixel(img, i, alpha, output) {
 }
 
 </script>
-</head>
-
-<body>
-
-<img id=‘p1’ src=“photo-1.jpeg” hidden>
-<img id = ‘p2’ src=“photo-2.jpeg” hidden>
-
-<canvas id=“image1” width=“750” height=“1000” hidden></canvas>
-
-<canvas id=“image2” style=“width:100%” width=“750” height=“1000” hidden ></canvas>
-
-<canvas id=“diff” style=“width:100%” width=“750” height=“1000” hidden></canvas>
 
 
-<img id=‘output’> 
+<img id='p1' src="photo-1.jpeg" hidden>
+<img id = 'p2' src="photo-2.jpeg" hidden>
 
-<img id=‘diffout’> 
+<canvas id="imagecan1" width="750" height="1000" hidden></canvas>
+
+<canvas id="imagecan2" style="width:100%" width="750" height="1000" hidden ></canvas>
+
+<canvas id="diff" style="width:100%" width="750" height="1000" hidden></canvas>
+
+
+<img id='output'> 
+
+<img id='diffout'> 
 
 <script>
 
-window.addEventListener(“load”, eventWindowLoaded, false);
-function eventWindowLoaded () {
+
+
+function diffit() {
+  alert('diffing')
+  var diffcan= document.getElementById("diff");
   
-var diffcan= document.getElementById(“diff”);
-  
-  var img1 = document.getElementById(“p1”);
+  var img1 = document.getElementById("myimage1");
   width = img1.naturalWidth
   height = img1.naturalHeight
   
   
-  var diffctx = diffcan.getContext(“2d”);
+  var diffctx = diffcan.getContext("2d");
   diff = diffctx.createImageData(width, height);
   
-  var i1 = document.getElementById(“image1”);
+  var i1 = document.getElementById("imagecan1");
   //alert(i1)
-  var i1ctx = i1.getContext(“2d”);
+  var i1ctx = i1.getContext("2d");
   //alert(i1ctx)
   
   
-  document.getElementById(“image1”).width=width
-  document.getElementById(“image1”).height=height
-  document.getElementById(“image2”).width=width
-  document.getElementById(“image2”).height=height
-  document.getElementById(“diff”).width=width
-  document.getElementById(“diff”).height=height
+  document.getElementById("imagecan1").width=width
+  document.getElementById("imagecan1").height=height
+  document.getElementById("imagecan2").width=width
+  document.getElementById("imagecan2").height=height
+  document.getElementById("diff").width=width
+  document.getElementById("diff").height=height
   
   
   i1ctx.drawImage(img1, 0, 0);
-  var i2 = document.getElementById(“image2”);
+  var i2 = document.getElementById("imagecan2");
   //alert(i1)
-  var i2ctx = i2.getContext(“2d”);
+  var i2ctx = i2.getContext("2d");
   //alert(i1ctx)
-  var img2 = document.getElementById(“p2”);
+  var img2 = document.getElementById("myimage2");
   //alert(img1)
   
   i2ctx.drawImage(img2, 0, 0);
@@ -697,14 +708,16 @@ var diffcan= document.getElementById(“diff”);
     
     i2ctx.drawImage(diffcan, 0, 0);
     
-    out = document.getElementById(‘output’)
-    out.src = i2.toDataURL(‘image/png’)
+    out = document.getElementById('output')
+    out.src = i2.toDataURL('image/png')
     
     
-    diffout = document.getElementById(‘diffout’)
-    diffout.src = diffcan.toDataURL(‘image/png’)
+    diffout = document.getElementById('diffout')
+    diffout.src = diffcan.toDataURL('image/png')
 }
 
+button_diff = document.getElementById('diffit')
+button_diff.setAttribute('onclick' , "diffit()")
 </script>  
 
 </body>
