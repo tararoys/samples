@@ -10,7 +10,7 @@
 <head >
 
     <meta charset="utf-8">
-    <meta name="description" content="Amazingly Easy Photo Captioner">
+    <meta name="description" content="Picture Differ">
     <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1, maximum-scale=1">
     <meta itemprop="description" content="Caption photos as you take them.">
     <meta itemprop="image" content="../../../images/webrtc-icon-192x192.png">
@@ -38,8 +38,7 @@
 
     <a id="photo"><video id='vid' style= "position: absolute;top: 0;left: 0;opacity: 0.8;z-index: 1"  autoplay playsinline></video></a>
     <!--<textarea id="caption" style="z-index: 9; position: absolute; width: 80%; left: 10%; text-align:center;  color:white; opacity:1; background-color: rgba(0, 0, 0, 1); font-weight: bold">hello world</textarea>-->
-    <textarea id='caption' row = "1" oninput="this.style.height = 'auto'; this.style.height = (this.scrollHeight) + 'px';" style="  border: none;
-    outline: none; z-index: 9; resize:both; position: absolute; font-size: x-large; width: 100%;  text-align:center;  color:white; opacity:1; background-color: rgba(0, 0, 0, 1); font-weight: bold; padding: 0%;" ></textarea>
+   
    
 </div>
 <div class="select">
@@ -244,8 +243,9 @@ console.log("button was clicked");
   canvas.height = thing.offsetHeight;
   canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
 
-  domtoimage.toPng(node)
-    .then(function (dataUrl) {
+  //domtoimage.toPng(node)
+
+function take_picture(dataUrl) {
   
         var img = new Image();
         
@@ -290,10 +290,13 @@ referencenode.parentNode.insertBefore(container, referencenode.nextSibling);
               }, 0);
             });
           }
-    })
+    }
+    /*)
     .catch(function (error) {
         console.error('oops, something went wrong!', error);
-    });
+    });*/
+
+take_picture(canvas.toDataURL());
 
     var temp = document.createElement("textarea");
     document.body.appendChild(temp);
