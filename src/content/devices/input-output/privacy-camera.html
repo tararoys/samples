@@ -14,13 +14,13 @@
     <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1, maximum-scale=1">
     <meta itemprop="description" content="Caption photos as you take them.">
     <meta itemprop="image" content="../../../images/webrtc-icon-192x192.png">
-    <meta itemprop="name" content="Tara's Super Simple Captioner.">
+    <meta itemprop="name" content="Tara's Picture Differ">
     <meta name="mobile-web-app-capable" content="yes">
     <meta id="theme-color" name="theme-color" content="#ffffff">
 
     <base target="_blank">
 
-    <title>Tara's Super Simple Photo Captioner</title>
+    <title>Tara's Picture Differ</title>
 
     <link rel="icon" sizes="192x192" href="../../../images/webrtc-icon-192x192.png">
     <!--<link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css">-->
@@ -672,7 +672,7 @@ function diffit() {
     imag2 = i2ctx.getImageData(0, 0, width, height);
     pixelmatch(imag1.data, imag2.data, diff.data, height, width);
     diffctx.fillStyle = "white";
-    diffctx.fillRect(0, 0, canvas.width, canvas.height);
+    diffctx.fillRect(0, 0, width, height);
     diffctx.putImageData(diff, 0, 0);
     
     var imageData = diffctx.getImageData(0, 0, width, height);
@@ -710,13 +710,18 @@ function diffit() {
     
     
     i2ctx.drawImage(diffcan, 0, 0);
+
     
     out = document.getElementById('output')
     out.src = i2.toDataURL('image/png')
+
+    i2ctx.fillStyle = "white";
+    i2ctx.fillRect(0, 0, width, height);
+    i2ctx.drawImage(diffcan, 0, 0);
     
     
     diffout = document.getElementById('diffout')
-    diffout.src = diffcan.toDataURL('image/png')
+    diffout.src = i2.toDataURL('image/png')
 }
 
 button_diff = document.getElementById('diffit')
