@@ -39,13 +39,13 @@
     <a id="photo"><video id='vid' style= "position: absolute;top: 0;left: 0;opacity: 0.8;z-index: 1"  autoplay playsinline></video></a>
     <!--<textarea id="caption" style="z-index: 9; position: absolute; width: 80%; left: 10%; text-align:center;  color:white; opacity:1; background-color: rgba(0, 0, 0, 1); font-weight: bold">hello world</textarea>-->
     <textarea id='caption' row = "1" oninput="this.style.height = 'auto'; this.style.height = (this.scrollHeight) + 'px';" style="  border: none;
-    outline: none; z-index: 9; resize:both; position: absolute; font-size: x-large; width: 100%;  text-align:center;  color:white; opacity:1; background-color: rgba(0, 0, 0, 1); font-weight: bold; padding: 0%;" >Write here and tap on the picture to save it.</textarea>
+    outline: none; z-index: 9; resize:both; position: absolute; font-size: x-large; width: 100%;  text-align:center;  color:white; opacity:1; background-color: rgba(0, 0, 0, 1); font-weight: bold; padding: 0%;" ></textarea>
    
 </div>
 <div class="select">
     <label for="videoSource">Video source: </label><select id="videoSource"></select>
 </div>
-<button id="snapshot">take snapshot</button>
+
 <button id="image1"> image 1</button>
 <button id="image2"> image 2</button>
 <button id="diffit"> diffit </button>
@@ -79,6 +79,7 @@ const videoElement = document.querySelector('video');
 //const audioOutputSelect = document.querySelector('select#audioOutput');
 const videoSelect = document.querySelector('select#videoSource');
 //const selectors = [audioInputSelect, audioOutputSelect, videoSelect];
+
 const selectors = [videoSelect]
 //audioOutputSelect.disabled = !('sinkId' in HTMLMediaElement.prototype);
 
@@ -209,6 +210,7 @@ function start() {
     });
   }
   //const audioSource = audioInputSelect.value;
+  
   const videoSource = videoSelect.value;
   const constraints = {
     //audio: {deviceId: audioSource ? {exact: audioSource} : undefined},
@@ -669,6 +671,8 @@ function diffit() {
     imag1 = i1ctx.getImageData(0, 0, width, height);
     imag2 = i2ctx.getImageData(0, 0, width, height);
     pixelmatch(imag1.data, imag2.data, diff.data, height, width);
+    diffctx.fillStyle = "white";
+    diffctx.fillRect(0, 0, canvas.width, canvas.height);
     diffctx.putImageData(diff, 0, 0);
     
     var imageData = diffctx.getImageData(0, 0, width, height);
