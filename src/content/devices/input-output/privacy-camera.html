@@ -31,7 +31,8 @@
 </head>
 
 <body style="margin:0; padding: 0">
-
+  <img id='output'> 
+  <img id='diffout'> 
   
  <div id = "video-box" style=" position: relative;" class="container">
 
@@ -52,6 +53,7 @@
 <canvas id = 'mycanvas' style="display:none" ></canvas>
 </div>
 <div>
+
   <img id="myimage1" src="_">
   <img id="myimage2" src="_">
 </div> 
@@ -298,7 +300,7 @@ referencenode.parentNode.insertBefore(container, referencenode.nextSibling);
     document.execCommand('copy');
     temp.remove();
     var temp2 = document.getElementById('caption');
-    temp2.select();
+    //temp2.select();
 
 
 }
@@ -623,16 +625,13 @@ function drawGrayPixel(img, i, alpha, output) {
 <canvas id="diff" style="width:100%" width="750" height="1000" hidden></canvas>
 
 
-<img id='output'> 
 
-<img id='diffout'> 
 
 <script>
 
 
 
 function diffit() {
-  alert('diffing')
   var diffcan= document.getElementById("diff");
   
   var img1 = document.getElementById("myimage1");
