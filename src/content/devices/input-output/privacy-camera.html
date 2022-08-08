@@ -232,7 +232,7 @@ window.onresize = start()
 
 function take_snapshot(image){
 
-  var node = document.getElementById('caption');
+  //var node = document.getElementById('caption');
   const video = document.querySelector('video');
 const canvas = window.canvas = document.getElementById('mycanvas');
 var thing  = document.getElementById('video-box');
@@ -244,60 +244,19 @@ console.log("button was clicked");
 
   //domtoimage.toPng(node)
 
-function take_picture(dataUrl) {
-  
-        var img = new Image();
-        
-        img.src = dataUrl;
-        img.onload = function(){
-          canvas.getContext('2d').drawImage(img,0,0, img.width, img.height);
-          
-          requestAnimationFrame(() => {
-            // This function will run in the next animation frame, *right before*
-            // the browser will update the pixels on the display (paint).
-      
-              // To ensure that we run logic *after* the display has been
-              // updated, an option is to queue yet one more callback
-              // using setTimeout.
-              setTimeout(() => {
-                  // At this point, the page rendering has been updated with the
-                  // `drawImage` result (or a later frame's result, see below).
-                  var meme = new Image();
 
-meme = document.getElementById(image)
+
+var meme = document.getElementById(image)
 var image_string = canvas.toDataURL();
 meme.src= image_string;
 
-meme.id = image;
-
-//image_array.push(image_string);
-//if (image_array.length > 5){ // added because localstorage limits the amount I can put in it, so I can only realistically save the last five pictures.
-//  image_array.shift();
-//}
-
-//var camera_roll = JSON.stringify(image_array);
-
-//window.localStorage.setItem("camera_roll", camera_roll);
+//meme.id = image;
 
 
-//document.body.appendChild(meme);
 
-/*
-var container = document.createElement('div');
-container.appendChild(meme);
-var referencenode =  document.getElementById('can')
-referencenode.parentNode.insertBefore(container, referencenode.nextSibling);
-*/
-              }, 0);
-            });
-          }
-    }
-    /*)
-    .catch(function (error) {
-        console.error('oops, something went wrong!', error);
-    });*/
 
-take_picture(canvas.toDataURL());
+
+
 
     var temp = document.createElement("textarea");
     document.body.appendChild(temp);
@@ -340,8 +299,8 @@ function tapHandler(event) {
  }
 
 document.body.onload = function(){
-  var temp = document.getElementById('caption');
-  temp.select();
+  //var temp = document.getElementById('caption');
+  //temp.select();
 }
 
  /**document.body.onload = function(){
