@@ -271,6 +271,98 @@ meme.src= image_string;
     var temp2 = document.getElementById('caption');
     //temp2.select();
 
+    var diffcan= document.getElementById("diff");
+  
+  var img1 = document.getElementById("myimage1");
+  width = img1.naturalWidth
+  height = img1.naturalHeight
+  
+  
+  var diffctx = diffcan.getContext("2d");
+  diff = diffctx.createImageData(width, height);
+  
+  var i1 = document.getElementById("imagecan1");
+  //alert(i1)
+  var i1ctx = i1.getContext("2d");
+  //alert(i1ctx)
+  
+  
+  document.getElementById("imagecan1").width=width
+  document.getElementById("imagecan1").height=height
+  document.getElementById("imagecan2").width=width
+  document.getElementById("imagecan2").height=height
+  document.getElementById("diff").width=width
+  document.getElementById("diff").height=height
+  
+  
+  i1ctx.drawImage(img1, 0, 0);
+  var i2 = document.getElementById("imagecan2");
+  //alert(i1)
+  var i2ctx = i2.getContext("2d");
+  //alert(i1ctx)
+  var img2 = document.getElementById("myimage2");
+  //alert(img1)
+  
+  i2ctx.scale(.96, .96)
+  i2ctx.translate(width*.02, height*.02)
+  i2ctx.drawImage(img1,0,0)
+
+  //i2ctx.drawImage(img2, 0, 0);
+  
+    imag1 = i1ctx.getImageData(0, 0, width, height);
+    imag2 = i2ctx.getImageData(0, 0, width, height);
+    pixelmatch(imag1.data, imag2.data, diff.data, height, width);
+    diffctx.fillStyle = "white";
+    diffctx.fillRect(0, 0, width, height);
+    diffctx.putImageData(diff, 0, 0);
+    
+    var imageData = diffctx.getImageData(0, 0, width, height);
+    var pixels = imageData.data;
+
+    // Loop through set of fours due to four color channels: red, green, blue, alpha
+    for (var i = 0; i < pixels.length; i += 4) {
+      // Ensure that all color channels are fully white
+      pixels[i] = 0;                      // Red channel
+      pixels[i + 1] = 0;                  // Green channel
+      pixels[i + 2] = 0;                  // Blue channel
+      pixels[i + 3] = 255 - pixels[i + 3];  // Alpha channel
+    }
+    
+    
+    imageData.data = pixels;
+    diffctx.putImageData(imageData, 0, 0);
+  
+    
+    var imageData = i2ctx.getImageData(0, 0, width,height);
+    var pixels = imageData.data;
+
+    // Loop through set of fours due to four color channels: red, green, blue, alpha
+    for (var i = 0; i < pixels.length; i += 4) {
+      // Ensure that all color channels are fully white
+      
+      value = (pixels[i] + pixels[i + 1] + pixels[i + 2]) / 3 ;  
+      pixels[i] = value
+      pixels[i + 1] = value
+      pixels[i + 2] = value
+      }
+      
+      imageData.data = pixels;
+      i2ctx.putImageData(imageData, 0, 0);
+    
+    
+    i2ctx.drawImage(diffcan, 0, 0);
+
+    
+    out = document.getElementById('output')
+    out.src = i2.toDataURL('image/png')
+
+    i2ctx.fillStyle = "white";
+    i2ctx.fillRect(0, 0, width, height);
+    i2ctx.drawImage(diffcan, 0, 0);
+    
+    
+    diffout = document.getElementById('diffout')
+    diffout.src = i2.toDataURL('image/png')
 
 }
 
