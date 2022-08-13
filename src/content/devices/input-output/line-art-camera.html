@@ -234,52 +234,16 @@ function resize(){
 
 window.onresize = start()
 
-function take_snapshot(image){
-
-  //var node = document.getElementById('caption');
-  const video = document.querySelector('video');
-const canvas = window.canvas = document.getElementById('mycanvas');
-var thing  = document.getElementById('video-box');
-console.log("button was clicked"); 
-
-  canvas.width = thing.offsetWidth;
-  canvas.height = thing.offsetHeight;
-  canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-
-  //domtoimage.toPng(node)
-
-
-
-var meme = document.getElementById(image)
-var image_string = canvas.toDataURL();
-meme.src= image_string;
-
-//meme.id = image;
-
-
-
-
-
-
-
-    var temp = document.createElement("textarea");
-    document.body.appendChild(temp);
-    temp.value = document.getElementsByTagName("html")[0].innerHTML;
-    temp.select();
-    document.execCommand('copy');
-    temp.remove();
-    var temp2 = document.getElementById('caption');
-    //temp2.select();
-
-    var diffcan= document.getElementById("diff");
+function diffit() {
+  var diffcan= document.getElementById("diff");
   
   var img1 = document.getElementById("myimage1");
-  width = img1.naturalWidth
-  height = img1.naturalHeight
+  var width = img1.naturalWidth
+  var height = img1.naturalHeight
   
   
   var diffctx = diffcan.getContext("2d");
-  diff = diffctx.createImageData(width, height);
+  var diff = diffctx.createImageData(width, height);
   
   var i1 = document.getElementById("imagecan1");
   //alert(i1)
@@ -309,8 +273,8 @@ meme.src= image_string;
 
   //i2ctx.drawImage(img2, 0, 0);
   
-    imag1 = i1ctx.getImageData(0, 0, width, height);
-    imag2 = i2ctx.getImageData(0, 0, width, height);
+    var imag1 = i1ctx.getImageData(0, 0, width, height);
+    var imag2 = i2ctx.getImageData(0, 0, width, height);
     pixelmatch(imag1.data, imag2.data, diff.data, height, width);
     diffctx.fillStyle = "white";
     diffctx.fillRect(0, 0, width, height);
@@ -329,7 +293,7 @@ meme.src= image_string;
     }
     
     
-    imageData.data = pixels;
+    //imageData.data = pixels;
     diffctx.putImageData(imageData, 0, 0);
   
     
@@ -340,20 +304,20 @@ meme.src= image_string;
     for (var i = 0; i < pixels.length; i += 4) {
       // Ensure that all color channels are fully white
       
-      value = (pixels[i] + pixels[i + 1] + pixels[i + 2]) / 3 ;  
+      var value = (pixels[i] + pixels[i + 1] + pixels[i + 2]) / 3 ;  
       pixels[i] = value
       pixels[i + 1] = value
       pixels[i + 2] = value
       }
       
-      imageData.data = pixels;
+      //imageData.data = pixels;
       i2ctx.putImageData(imageData, 0, 0);
     
     
     i2ctx.drawImage(diffcan, 0, 0);
 
     
-    out = document.getElementById('output')
+    var out = document.getElementById('output')
     out.src = i2.toDataURL('image/png')
 
     i2ctx.fillStyle = "white";
@@ -361,9 +325,53 @@ meme.src= image_string;
     i2ctx.drawImage(diffcan, 0, 0);
     
     
-    diffout = document.getElementById('diffout')
+    var diffout = document.getElementById('diffout')
     diffout.src = i2.toDataURL('image/png')
+}
 
+function take_snapshot(image){
+
+  //var node = document.getElementById('caption');
+  const video = document.querySelector('video');
+const canvas = window.canvas = document.getElementById('mycanvas');
+var thing  = document.getElementById('video-box');
+console.log("button was clicked"); 
+
+  canvas.width = thing.offsetWidth;
+  canvas.height = thing.offsetHeight;
+  canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+
+  //domtoimage.toPng(node)
+
+
+
+var meme = document.getElementById(image)
+var image_string = canvas.toDataURL();
+meme.src= image_string;
+
+
+
+//meme.id = image;
+
+
+
+
+
+
+
+    var temp = document.createElement("textarea");
+    document.body.appendChild(temp);
+    temp.value = document.getElementsByTagName("html")[0].innerHTML;
+    temp.select();
+    document.execCommand('copy');
+    temp.remove();
+    var temp2 = document.getElementById('caption');
+    //temp2.select();
+
+    var diffcan= document.getElementById("diff");
+  
+  
+    setTimeout(diffit, 500)
 }
 
 var shutter = document.getElementById('vid')
@@ -372,7 +380,7 @@ var button_image_1 = document.getElementById('image1')
 var button_image_2 = document.getElementById('image2')
 
 //button.setAttribute('onclick' , "take_snapshot('hi')")
-button_image_1.setAttribute('onclick' , "take_snapshot('myimage1')")
+button_image_1.setAttribute('onclick' , "take_snapshot('myimage1');")
 button_image_2.setAttribute('onclick' , "take_snapshot('myimage2')")
 
 //shutter.onclick = take_snapshot
@@ -692,100 +700,7 @@ function drawGrayPixel(img, i, alpha, output) {
 
 
 
-function diffit() {
-  var diffcan= document.getElementById("diff");
-  
-  var img1 = document.getElementById("myimage1");
-  width = img1.naturalWidth
-  height = img1.naturalHeight
-  
-  
-  var diffctx = diffcan.getContext("2d");
-  diff = diffctx.createImageData(width, height);
-  
-  var i1 = document.getElementById("imagecan1");
-  //alert(i1)
-  var i1ctx = i1.getContext("2d");
-  //alert(i1ctx)
-  
-  
-  document.getElementById("imagecan1").width=width
-  document.getElementById("imagecan1").height=height
-  document.getElementById("imagecan2").width=width
-  document.getElementById("imagecan2").height=height
-  document.getElementById("diff").width=width
-  document.getElementById("diff").height=height
-  
-  
-  i1ctx.drawImage(img1, 0, 0);
-  var i2 = document.getElementById("imagecan2");
-  //alert(i1)
-  var i2ctx = i2.getContext("2d");
-  //alert(i1ctx)
-  var img2 = document.getElementById("myimage2");
-  //alert(img1)
-  
-  i2ctx.scale(.96, .96)
-  i2ctx.translate(width*.02, height*.02)
-  i2ctx.drawImage(img1,0,0)
 
-  //i2ctx.drawImage(img2, 0, 0);
-  
-    imag1 = i1ctx.getImageData(0, 0, width, height);
-    imag2 = i2ctx.getImageData(0, 0, width, height);
-    pixelmatch(imag1.data, imag2.data, diff.data, height, width);
-    diffctx.fillStyle = "white";
-    diffctx.fillRect(0, 0, width, height);
-    diffctx.putImageData(diff, 0, 0);
-    
-    var imageData = diffctx.getImageData(0, 0, width, height);
-    var pixels = imageData.data;
-
-    // Loop through set of fours due to four color channels: red, green, blue, alpha
-    for (var i = 0; i < pixels.length; i += 4) {
-      // Ensure that all color channels are fully white
-      pixels[i] = 0;                      // Red channel
-      pixels[i + 1] = 0;                  // Green channel
-      pixels[i + 2] = 0;                  // Blue channel
-      pixels[i + 3] = 255 - pixels[i + 3];  // Alpha channel
-    }
-    
-    
-    imageData.data = pixels;
-    diffctx.putImageData(imageData, 0, 0);
-  
-    
-    var imageData = i2ctx.getImageData(0, 0, width,height);
-    var pixels = imageData.data;
-
-    // Loop through set of fours due to four color channels: red, green, blue, alpha
-    for (var i = 0; i < pixels.length; i += 4) {
-      // Ensure that all color channels are fully white
-      
-      value = (pixels[i] + pixels[i + 1] + pixels[i + 2]) / 3 ;  
-      pixels[i] = value
-      pixels[i + 1] = value
-      pixels[i + 2] = value
-      }
-      
-      imageData.data = pixels;
-      i2ctx.putImageData(imageData, 0, 0);
-    
-    
-    i2ctx.drawImage(diffcan, 0, 0);
-
-    
-    out = document.getElementById('output')
-    out.src = i2.toDataURL('image/png')
-
-    i2ctx.fillStyle = "white";
-    i2ctx.fillRect(0, 0, width, height);
-    i2ctx.drawImage(diffcan, 0, 0);
-    
-    
-    diffout = document.getElementById('diffout')
-    diffout.src = i2.toDataURL('image/png')
-}
 
 button_diff = document.getElementById('diffit')
 button_diff.setAttribute('onclick' , "diffit()")
