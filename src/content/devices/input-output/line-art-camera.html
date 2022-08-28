@@ -30,19 +30,20 @@
 
 <body style="margin:0; padding: 0">
   <button id="image1" style="height:100px"> Step 1: take picture of first image</button>
-<button id="image2" style = height:100px hidden="true"> Step 2: Take picture of second image</button>
-<button id="diffit" style = 'height:100px'> Step 3: find differences between two images </button>
-<img id='diffout'>   
-<img id='output'> 
+  <div id = "video-box" style=" position: relative; width: 20%; height: 20%" class="container">
 
-  
- <div id = "video-box" style=" position: relative;" class="container">
-
-    <a id="photo"><video id='vid' style= "position: absolute;top: 0;left: 0;opacity: 0.8;z-index: 1"  autoplay playsinline></video></a>
+    <a id="photo"><video id='vid'  autoplay playsinline></video></a>
     <!--<textarea id="caption" style="z-index: 9; position: absolute; width: 80%; left: 10%; text-align:center;  color:white; opacity:1; background-color: rgba(0, 0, 0, 1); font-weight: bold">hello world</textarea>-->
    
    
 </div>
+  <button id="image2" style = height:100px hidden="true"> Step 2: Take picture of second image</button>
+<button id="diffit" style = 'height:100px'> Step 3: find differences between two images </button>
+<img id='diffout'>   
+<img id='output' hidden> 
+
+  
+
 <div class="select">
     <label for="videoSource">Video source: </label><select id="videoSource"></select>
 </div>
@@ -173,6 +174,8 @@ if (mobileCheck()){
     element.style.height=stream.getVideoTracks()[0].getSettings().height + "px";
     element2.style.width = element.style.width;
     element2.style.height = element.style.height;
+    element.style.width="400px"
+    element.style.height="300px"
   }
   else if (getOrientation()=== "Portrait"){
     console.log(getOrientation())
@@ -180,13 +183,18 @@ if (mobileCheck()){
     element.style.height=stream.getVideoTracks()[0].getSettings().width + "px";
     element2.style.width = element.style.width;
     element2.style.height = element.style.height;
+    element.style.width="400px"
+    element.style.height="300px"
   }
 }
 else{
-  element.style.width = stream.getVideoTracks()[0].getSettings().width + "px";
-  element.style.height=stream.getVideoTracks()[0].getSettings().height + "px";
-  element2.style.width = element.style.width;
-  element2.style.height = element.style.height;
+  //element.style.width = "20%";
+  //element.style.height= "20%";
+  element2.style.width = "100%";
+  element2.style.height = "100%";
+
+ 
+ 
 
 }
 
@@ -330,15 +338,18 @@ function diffit() {
 }
 
 function take_snapshot(image){
+  stream = window.stream;
 
   //var node = document.getElementById('caption');
   const video = document.querySelector('video');
 const canvas = window.canvas = document.getElementById('mycanvas');
-var thing  = document.getElementById('video-box');
+var thing  = document.getElementById('vid');
 console.log("button was clicked"); 
 
-  canvas.width = thing.offsetWidth;
-  canvas.height = thing.offsetHeight;
+canvas.width = stream.getVideoTracks()[0].getSettings().width ;
+canvas.height = stream.getVideoTracks()[0].getSettings().height ;
+  //canvas.width = thing.offsetWidth;
+  //canvas.height = thing.offsetHeight;
   canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
 
   //domtoimage.toPng(node)
