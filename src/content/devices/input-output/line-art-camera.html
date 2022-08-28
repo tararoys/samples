@@ -31,8 +31,12 @@
 </head>
 
 <body style="margin:0; padding: 0">
-  <img id='output'> 
-  <img id='diffout'> 
+  <button id="image1" style="height:100px"> Step 1: take picture of first image</button>
+<button id="image2" style = height:100px hidden="true"> Step 2: Take picture of second image</button>
+<button id="diffit" style = 'height:100px'> Step 3: find differences between two images </button>
+<img id='diffout'>   
+<img id='output'> 
+
   
  <div id = "video-box" style=" position: relative;" class="container">
 
@@ -45,9 +49,7 @@
     <label for="videoSource">Video source: </label><select id="videoSource"></select>
 </div>
 
-<button id="image1" style="height:100px"> Step 1: take picture of first image</button>
-<button id="image2" style = height:100px hidden="true"> Step 2: Take picture of second image</button>
-<button id="diffit" style = 'height:100px'> Step 3: find differences between two images </button>
+
 <div id = "can">
 <canvas id = 'mycanvas' style="display:none" ></canvas>
 </div>
