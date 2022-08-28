@@ -170,21 +170,13 @@ if (mobileCheck()){
   
   if (getOrientation() === "Landscape") {
     console.log(getOrientation())
-    element.style.width = stream.getVideoTracks()[0].getSettings().width + "px";
-    element.style.height=stream.getVideoTracks()[0].getSettings().height + "px";
-    element2.style.width = element.style.width;
-    element2.style.height = element.style.height;
-    element.style.width="400px"
-    element.style.height="300px"
+    element2.style.width = "100%";
+    element2.style.height = "100%";
   }
   else if (getOrientation()=== "Portrait"){
     console.log(getOrientation())
-    element.style.width = stream.getVideoTracks()[0].getSettings().height + "px";
-    element.style.height=stream.getVideoTracks()[0].getSettings().width + "px";
-    element2.style.width = element.style.width;
-    element2.style.height = element.style.height;
-    element.style.width="400px"
-    element.style.height="300px"
+    element2.style.width = "100%";
+    element2.style.height = "100%";
   }
 }
 else{
