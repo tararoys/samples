@@ -1,0 +1,748 @@
+<!DOCTYPE html >
+<!--git add
+ *  Copyright (c) 2015 The WebRTC project authors. All Rights Reserved.
+ *
+ *  Use of this source code is governed by a BSD-style license
+ *  that can be found in the LICENSE file in the root of the source
+ *  tree.
+-->
+<html >
+<head >
+
+    <meta charset="utf-8">
+    <meta name="description" content="Picture Differ">
+    <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1, maximum-scale=1">
+    <meta itemprop="description" content="Caption photos as you take them.">
+    <meta itemprop="image" content="../../../images/webrtc-icon-192x192.png">
+    <meta itemprop="name" content="Black And White Caption Camera">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta id="theme-color" name="theme-color" content="#ffffff">
+
+    <base target="_blank">
+
+    <title>Black And White Caption Camera</title>
+
+    <link rel="icon" sizes="192x192" href="../../../images/webrtc-icon-192x192.png">
+    <!--<link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css">-->
+    <!--<link rel="stylesheet" href="../../../css/main.css">-->
+
+</head>
+
+<body style="margin:0; padding: 0">
+
+  <div id = "video-box" style=" position: relative; width: 20%; height: 20%" class="container">
+
+    <a id="photo"><video id='vid'  autoplay playsinline></video></a>
+    <textarea id='caption' row = "1" oninput="this.style.height = 'auto'; this.style.height = (this.scrollHeight) + 'px';" style="  border: none; outline: none; z-index: 9; resize:both;  font-size: x-large; width: 100%;  text-align:center;  color:white; opacity:1; background-color: rgba(0, 0, 0, 1); font-weight: bold; padding: 0%;" >Write here and tap on the picture to save it.</textarea>
+   
+</div>
+<button id="image1" style="height:100px"> Step 1: take picture of first image</button>
+  <button id="image2" style = height:100px hidden="true"> Step 2: Take picture of second image</button>
+<button id="diffit" style = 'height:100px' hidden = "true"> Step 3: find differences between two images </button>
+<img id='diffout'>   
+<img id='output' hidden> 
+
+  
+
+<div class="select">
+    <label for="videoSource">Video source: </label><select id="videoSource"></select>
+</div>
+
+
+<div id = "can">
+<canvas id = 'mycanvas'  hidden></canvas>
+</div>
+<div>
+  <img id="myimage1" src="">
+  <img id="myimage2" src="">
+</div> 
+
+<script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+<script >/*! dom-to-image 10-06-2017 */
+    !function(a){"use strict";function b(a,b){function c(a){return b.bgcolor&&(a.style.backgroundColor=b.bgcolor),b.width&&(a.style.width=b.width+"px"),b.height&&(a.style.height=b.height+"px"),b.style&&Object.keys(b.style).forEach(function(c){a.style[c]=b.style[c]}),a}return b=b||{},g(b),Promise.resolve(a).then(function(a){return i(a,b.filter,!0)}).then(j).then(k).then(c).then(function(c){return l(c,b.width||q.width(a),b.height||q.height(a))})}function c(a,b){return h(a,b||{}).then(function(b){return b.getContext("2d").getImageData(0,0,q.width(a),q.height(a)).data})}function d(a,b){return h(a,b||{}).then(function(a){return a.toDataURL()})}function e(a,b){return b=b||{},h(a,b).then(function(a){return a.toDataURL("image/jpeg",b.quality||1)})}function f(a,b){return h(a,b||{}).then(q.canvasToBlob)}function g(a){"undefined"==typeof a.imagePlaceholder?v.impl.options.imagePlaceholder=u.imagePlaceholder:v.impl.options.imagePlaceholder=a.imagePlaceholder,"undefined"==typeof a.cacheBust?v.impl.options.cacheBust=u.cacheBust:v.impl.options.cacheBust=a.cacheBust}function h(a,c){function d(a){var b=document.createElement("canvas");if(b.width=c.width||q.width(a),b.height=c.height||q.height(a),c.bgcolor){var d=b.getContext("2d");d.fillStyle=c.bgcolor,d.fillRect(0,0,b.width,b.height)}return b}return b(a,c).then(q.makeImage).then(q.delay(100)).then(function(b){var c=d(a);return c.getContext("2d").drawImage(b,0,0),c})}function i(a,b,c){function d(a){return a instanceof HTMLCanvasElement?q.makeImage(a.toDataURL()):a.cloneNode(!1)}function e(a,b,c){function d(a,b,c){var d=Promise.resolve();return b.forEach(function(b){d=d.then(function(){return i(b,c)}).then(function(b){b&&a.appendChild(b)})}),d}var e=a.childNodes;return 0===e.length?Promise.resolve(b):d(b,q.asArray(e),c).then(function(){return b})}function f(a,b){function c(){function c(a,b){function c(a,b){q.asArray(a).forEach(function(c){b.setProperty(c,a.getPropertyValue(c),a.getPropertyPriority(c))})}a.cssText?b.cssText=a.cssText:c(a,b)}c(window.getComputedStyle(a),b.style)}function d(){function c(c){function d(a,b,c){function d(a){var b=a.getPropertyValue("content");return a.cssText+" content: "+b+";"}function e(a){function b(b){return b+": "+a.getPropertyValue(b)+(a.getPropertyPriority(b)?" !important":"")}return q.asArray(a).map(b).join("; ")+";"}var f="."+a+":"+b,g=c.cssText?d(c):e(c);return document.createTextNode(f+"{"+g+"}")}var e=window.getComputedStyle(a,c),f=e.getPropertyValue("content");if(""!==f&&"none"!==f){var g=q.uid();b.className=b.className+" "+g;var h=document.createElement("style");h.appendChild(d(g,c,e)),b.appendChild(h)}}[":before",":after"].forEach(function(a){c(a)})}function e(){a instanceof HTMLTextAreaElement&&(b.innerHTML=a.value),a instanceof HTMLInputElement&&b.setAttribute("value",a.value)}function f(){b instanceof SVGElement&&(b.setAttribute("xmlns","http://www.w3.org/2000/svg"),b instanceof SVGRectElement&&["width","height"].forEach(function(a){var c=b.getAttribute(a);c&&b.style.setProperty(a,c)}))}return b instanceof Element?Promise.resolve().then(c).then(d).then(e).then(f).then(function(){return b}):b}return c||!b||b(a)?Promise.resolve(a).then(d).then(function(c){return e(a,c,b)}).then(function(b){return f(a,b)}):Promise.resolve()}function j(a){return s.resolveAll().then(function(b){var c=document.createElement("style");return a.appendChild(c),c.appendChild(document.createTextNode(b)),a})}function k(a){return t.inlineAll(a).then(function(){return a})}function l(a,b,c){return Promise.resolve(a).then(function(a){return a.setAttribute("xmlns","http://www.w3.org/1999/xhtml"),(new XMLSerializer).serializeToString(a)}).then(q.escapeXhtml).then(function(a){return'<foreignObject x="0" y="0" width="100%" height="100%">'+a+"</foreignObject>"}).then(function(a){return'<svg xmlns="http://www.w3.org/2000/svg" width="'+b+'" height="'+c+'">'+a+"</svg>"}).then(function(a){return"data:image/svg+xml;charset=utf-8,"+a})}function m(){function a(){var a="application/font-woff",b="image/jpeg";return{woff:a,woff2:a,ttf:"application/font-truetype",eot:"application/vnd.ms-fontobject",png:"image/png",jpg:b,jpeg:b,gif:"image/gif",tiff:"image/tiff",svg:"image/svg+xml"}}function b(a){var b=/\.([^\.\/]*?)$/g.exec(a);return b?b[1]:""}function c(c){var d=b(c).toLowerCase();return a()[d]||""}function d(a){return a.search(/^(data:)/)!==-1}function e(a){return new Promise(function(b){for(var c=window.atob(a.toDataURL().split(",")[1]),d=c.length,e=new Uint8Array(d),f=0;f<d;f++)e[f]=c.charCodeAt(f);b(new Blob([e],{type:"image/png"}))})}function f(a){return a.toBlob?new Promise(function(b){a.toBlob(b)}):e(a)}function g(a,b){var c=document.implementation.createHTMLDocument(),d=c.createElement("base");c.head.appendChild(d);var e=c.createElement("a");return c.body.appendChild(e),d.href=b,e.href=a,e.href}function h(){var a=0;return function(){function b(){return("0000"+(Math.random()*Math.pow(36,4)<<0).toString(36)).slice(-4)}return"u"+b()+a++}}function i(a){return new Promise(function(b,c){var d=new Image;d.onload=function(){b(d)},d.onerror=c,d.src=a})}function j(a){var b=3e4;return v.impl.options.cacheBust&&(a+=(/\?/.test(a)?"&":"?")+(new Date).getTime()),new Promise(function(c){function d(){if(4===g.readyState){if(200!==g.status)return void(h?c(h):f("cannot fetch resource: "+a+", status: "+g.status));var b=new FileReader;b.onloadend=function(){var a=b.result.split(/,/)[1];c(a)},b.readAsDataURL(g.response)}}function e(){h?c(h):f("timeout of "+b+"ms occured while fetching resource: "+a)}function f(a){console.error(a),c("")}var g=new XMLHttpRequest;g.onreadystatechange=d,g.ontimeout=e,g.responseType="blob",g.timeout=b,g.open("GET",a,!0),g.send();var h;if(v.impl.options.imagePlaceholder){var i=v.impl.options.imagePlaceholder.split(/,/);i&&i[1]&&(h=i[1])}})}function k(a,b){return"data:"+b+";base64,"+a}function l(a){return a.replace(/([.*+?^${}()|\[\]\/\\])/g,"\\$1")}function m(a){return function(b){return new Promise(function(c){setTimeout(function(){c(b)},a)})}}function n(a){for(var b=[],c=a.length,d=0;d<c;d++)b.push(a[d]);return b}function o(a){return a.replace(/#/g,"%23").replace(/\n/g,"%0A")}function p(a){var b=r(a,"border-left-width"),c=r(a,"border-right-width");return a.scrollWidth+b+c}function q(a){var b=r(a,"border-top-width"),c=r(a,"border-bottom-width");return a.scrollHeight+b+c}function r(a,b){var c=window.getComputedStyle(a).getPropertyValue(b);return parseFloat(c.replace("px",""))}return{escape:l,parseExtension:b,mimeType:c,dataAsUrl:k,isDataUrl:d,canvasToBlob:f,resolveUrl:g,getAndEncode:j,uid:h(),delay:m,asArray:n,escapeXhtml:o,makeImage:i,width:p,height:q}}function n(){function a(a){return a.search(e)!==-1}function b(a){for(var b,c=[];null!==(b=e.exec(a));)c.push(b[1]);return c.filter(function(a){return!q.isDataUrl(a)})}function c(a,b,c,d){function e(a){return new RegExp("(url\\(['\"]?)("+q.escape(a)+")(['\"]?\\))","g")}return Promise.resolve(b).then(function(a){return c?q.resolveUrl(a,c):a}).then(d||q.getAndEncode).then(function(a){return q.dataAsUrl(a,q.mimeType(b))}).then(function(c){return a.replace(e(b),"$1"+c+"$3")})}function d(d,e,f){function g(){return!a(d)}return g()?Promise.resolve(d):Promise.resolve(d).then(b).then(function(a){var b=Promise.resolve(d);return a.forEach(function(a){b=b.then(function(b){return c(b,a,e,f)})}),b})}var e=/url\(['"]?([^'"]+?)['"]?\)/g;return{inlineAll:d,shouldProcess:a,impl:{readUrls:b,inline:c}}}function o(){function a(){return b(document).then(function(a){return Promise.all(a.map(function(a){return a.resolve()}))}).then(function(a){return a.join("\n")})}function b(){function a(a){return a.filter(function(a){return a.type===CSSRule.FONT_FACE_RULE}).filter(function(a){return r.shouldProcess(a.style.getPropertyValue("src"))})}function b(a){var b=[];return a.forEach(function(a){try{q.asArray(a.cssRules||[]).forEach(b.push.bind(b))}catch(c){console.log("Error while reading CSS rules from "+a.href,c.toString())}}),b}function c(a){return{resolve:function(){var b=(a.parentStyleSheet||{}).href;return r.inlineAll(a.cssText,b)},src:function(){return a.style.getPropertyValue("src")}}}return Promise.resolve(q.asArray(document.styleSheets)).then(b).then(a).then(function(a){return a.map(c)})}return{resolveAll:a,impl:{readAll:b}}}function p(){function a(a){function b(b){return q.isDataUrl(a.src)?Promise.resolve():Promise.resolve(a.src).then(b||q.getAndEncode).then(function(b){return q.dataAsUrl(b,q.mimeType(a.src))}).then(function(b){return new Promise(function(c,d){a.onload=c,a.onerror=d,a.src=b})})}return{inline:b}}function b(c){function d(a){var b=a.style.getPropertyValue("background");return b?r.inlineAll(b).then(function(b){a.style.setProperty("background",b,a.style.getPropertyPriority("background"))}).then(function(){return a}):Promise.resolve(a)}return c instanceof Element?d(c).then(function(){return c instanceof HTMLImageElement?a(c).inline():Promise.all(q.asArray(c.childNodes).map(function(a){return b(a)}))}):Promise.resolve(c)}return{inlineAll:b,impl:{newImage:a}}}var q=m(),r=n(),s=o(),t=p(),u={imagePlaceholder:void 0,cacheBust:!1},v={toSvg:b,toPng:d,toJpeg:e,toBlob:f,toPixelData:c,impl:{fontFaces:s,images:t,util:q,inliner:r,options:{}}};"undefined"!=typeof module?module.exports=v:a.domtoimage=v}(this);</script>
+<script async>
+/*
+*  Copyright (c) 2015 The WebRTC project authors. All Rights Reserved.
+*
+*  Use of this source code is governed by a BSD-style license
+*  that can be found in the LICENSE file in the root of the source
+*  tree.
+*/
+
+'use strict';
+
+var image_array = [];
+
+const videoElement = document.querySelector('video');
+//const audioInputSelect = document.querySelector('select#audioSource');
+//const audioOutputSelect = document.querySelector('select#audioOutput');
+const videoSelect = document.querySelector('select#videoSource');
+//const selectors = [audioInputSelect, audioOutputSelect, videoSelect];
+
+const selectors = [videoSelect]
+//audioOutputSelect.disabled = !('sinkId' in HTMLMediaElement.prototype);
+
+function gotDevices(deviceInfos) {
+  // Handles being called several times to update labels. Preserve values.
+  const values = selectors.map(select => select.value);
+  selectors.forEach(select => {
+    while (select.firstChild) {
+      select.removeChild(select.firstChild);
+    }
+  });
+  for (let i = 0; i !== deviceInfos.length; ++i) {
+    const deviceInfo = deviceInfos[i];
+    const option = document.createElement('option');
+    option.value = deviceInfo.deviceId;
+    //if (deviceInfo.kind === 'audioinput') {
+    //  option.text = deviceInfo.label || `microphone ${audioInputSelect.length + 1}`;
+    //  audioInputSelect.appendChild(option);
+    //} else if (deviceInfo.kind === 'audiooutput') {
+    //  option.text = deviceInfo.label || `speaker ${audioOutputSelect.length + 1}`;
+    //  audioOutputSelect.appendChild(option);
+    //} else if (deviceInfo.kind === 'videoinput') {
+    if (deviceInfo.kind === 'videoinput') {
+      option.text = deviceInfo.label || `camera ${videoSelect.length + 1}`;
+      videoSelect.appendChild(option);
+    } else {
+      console.log('Some other kind of source/device: ', deviceInfo);
+    }
+  }
+
+  selectors.forEach((select, selectorIndex) => {
+    if (Array.prototype.slice.call(select.childNodes).some(n => n.value === values[selectorIndex])) {
+      select.value = values[selectorIndex];
+    }
+  });
+}
+
+navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
+
+// Attach audio output device to video element using device/sink ID.
+function attachSinkId(element, sinkId) {
+  if (typeof element.sinkId !== 'undefined') {
+    element.setSinkId(sinkId)
+        .then(() => {
+          console.log(`Success, audio output device attached: ${sinkId}`);
+        })
+        .catch(error => {
+          let errorMessage = error;
+          if (error.name === 'SecurityError') {
+            errorMessage = `You need to use HTTPS for selecting audio output device: ${error}`;
+          }
+          console.error(errorMessage);
+          // Jump back to first output device in the list as it's the default.
+          audioOutputSelect.selectedIndex = 0;
+        });
+  } else {
+    console.warn('Browser does not support output device selection.');
+  }
+}
+
+function changeAudioDestination() {
+  const audioDestination = audioOutputSelect.value;
+  attachSinkId(videoElement, audioDestination);
+}
+
+function getOrientation(){
+
+  var orientation = window.innerWidth > window.innerHeight ? "Landscape" : "Portrait";
+  return orientation;
+}
+
+window.mobileCheck = function() {
+  let check = false;
+  (function(a){if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(a)||/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0,4))) check = true;})(navigator.userAgent||navigator.vendor||window.opera);
+  return check;
+};
+
+function gotStream(stream) {
+  window.stream = stream; // make stream available to console
+  videoElement.srcObject = stream;
+
+  console.log(stream)
+  console.log( stream.getVideoTracks()[0].getSettings().width)
+  // Refresh button list in case labels have become available
+  var element = document.getElementById('video-box');
+  var element2 = document.getElementById('vid'); 
+  
+if (mobileCheck()){
+  
+  if (getOrientation() === "Landscape") {
+    console.log(getOrientation())
+    element2.style.width = "100%";
+    element2.style.height = "100%";
+  }
+  else if (getOrientation()=== "Portrait"){
+    console.log(getOrientation())
+    element2.style.width = "100%";
+    element2.style.height = "100%";
+  }
+}
+else{
+  //element.style.width = "20%";
+  //element.style.height= "20%";
+  element2.style.width = "100%";
+  element2.style.height = "100%";
+
+ 
+ 
+
+}
+
+  console.log("width"+ element.style.width);
+  console.log("height" + element.style.height);
+  console.log(navigator.mediaDevices.enumerateDevices());
+  return navigator.mediaDevices.enumerateDevices();
+  
+}
+
+function handleError(error) {
+  console.log('navigator.MediaDevices.getUserMedia error: ', error.message, error.name);
+}
+
+function start() {
+  if (window.stream) {
+    window.stream.getTracks().forEach(track => {
+      track.stop();
+    });
+  }
+  //const audioSource = audioInputSelect.value;
+  
+  const videoSource = videoSelect.value;
+  const constraints = {
+    //audio: {deviceId: audioSource ? {exact: audioSource} : undefined},
+    video: {deviceId: videoSource ? {exact: videoSource} : undefined},
+    advanced:[{focusMode:'manual', focusDistance:0.33}]
+  };
+  console.log('hello world')
+  console.log(navigator.mediaDevices.getSupportedConstraints());
+  
+  navigator.mediaDevices.getUserMedia(constraints).then(gotStream).then(gotDevices).catch(handleError);
+}
+
+//audioInputSelect.onchange = start;
+//audioOutputSelect.onchange = changeAudioDestination;
+
+videoSelect.onchange = start;
+
+start();
+
+function resize(){ 
+  console.log('yo')
+}
+
+window.onresize = start()
+
+function diffit() {
+  var diffcan= document.getElementById("diff");
+  
+  var img1 = document.getElementById("myimage1");
+  var width = img1.naturalWidth
+  var height = img1.naturalHeight
+  
+  
+  var diffctx = diffcan.getContext("2d");
+  var diff = diffctx.createImageData(width, height);
+  
+  var i1 = document.getElementById("imagecan1");
+  //alert(i1)
+  var i1ctx = i1.getContext("2d");
+  //alert(i1ctx)
+  
+  
+  document.getElementById("imagecan1").width=width
+  document.getElementById("imagecan1").height=height
+  document.getElementById("imagecan2").width=width
+  document.getElementById("imagecan2").height=height
+  document.getElementById("diff").width=width
+  document.getElementById("diff").height=height
+  
+  
+  i1ctx.drawImage(img1, 0, 0);
+  var i2 = document.getElementById("imagecan2");
+  //alert(i1)
+  var i2ctx = i2.getContext("2d");
+  //alert(i1ctx)
+  var img2 = document.getElementById("myimage2");
+  //alert(img1)
+  
+  i2ctx.scale(.96, .96)
+  i2ctx.translate(width*.02, height*.02)
+  i2ctx.drawImage(img1,0,0)
+
+  //i2ctx.drawImage(img2, 0, 0);
+  
+    var imag1 = i1ctx.getImageData(0, 0, width, height);
+    var imag2 = i2ctx.getImageData(0, 0, width, height);
+    pixelmatch(imag1.data, imag2.data, diff.data, height, width);
+    diffctx.fillStyle = "white";
+    diffctx.fillRect(0, 0, width, height);
+    diffctx.putImageData(diff, 0, 0);
+    
+    var imageData = diffctx.getImageData(0, 0, width, height);
+    var pixels = imageData.data;
+
+    // Loop through set of fours due to four color channels: red, green, blue, alpha
+    for (var i = 0; i < pixels.length; i += 4) {
+      // Ensure that all color channels are fully white
+      pixels[i] = 0;                      // Red channel
+      pixels[i + 1] = 0;                  // Green channel
+      pixels[i + 2] = 0;                  // Blue channel
+      pixels[i + 3] = 255 - pixels[i + 3];  // Alpha channel
+    }
+    
+    
+    //imageData.data = pixels;
+    diffctx.putImageData(imageData, 0, 0);
+  
+    
+    var imageData = i2ctx.getImageData(0, 0, width,height);
+    var pixels = imageData.data;
+
+    // Loop through set of fours due to four color channels: red, green, blue, alpha
+    for (var i = 0; i < pixels.length; i += 4) {
+      // Ensure that all color channels are fully white
+      
+      var value = (pixels[i] + pixels[i + 1] + pixels[i + 2]) / 3 ;  
+      pixels[i] = value
+      pixels[i + 1] = value
+      pixels[i + 2] = value
+      }
+      
+      //imageData.data = pixels;
+      i2ctx.putImageData(imageData, 0, 0);
+    
+    
+    i2ctx.drawImage(diffcan, 0, 0);
+
+    
+    var out = document.getElementById('output')
+    out.src = i2.toDataURL('image/png')
+
+    i2ctx.fillStyle = "white";
+    i2ctx.fillRect(0, 0, width, height);
+    i2ctx.drawImage(diffcan, 0, 0);
+    
+    var node = document.getElementById('caption');
+    
+    domtoimage.toPng(node)
+    .then(function (dataUrl) {
+  
+        var img = new Image();
+        
+        img.src = dataUrl;
+        img.onload = function(){
+          i2ctx.drawImage(img,0,0, img.width, img.height);
+          var meme = document.getElementById("myimage1");
+          var image_string = i2.toDataURL();
+          meme.src= image_string;
+          
+          requestAnimationFrame(() => {
+            // This function will run in the next animation frame, *right before*
+            // the browser will update the pixels on the display (paint).
+      
+              // To ensure that we run logic *after* the display has been
+              // updated, an option is to queue yet one more callback
+              // using setTimeout.
+              setTimeout(() => {
+                  // At this point, the page rendering has been updated with the
+                  // `drawImage` result (or a later frame's result, see below).
+                  //var meme = new Image();
+                  //meme.id = 'pic';
+                  //var image_string = canvas.toDataURL();
+                  //meme.src= image_string;
+                  //var container = document.createElement('div');
+                  //container.appendChild(meme);
+                  //var referencenode =  document.getElementById('can')
+                  //referencenode.parentNode.insertBefore(container, referencenode.nextSibling);
+
+              }, 0);
+            });
+          }
+        
+    })
+    .catch(function (error) {
+        console.error('oops, something went wrong!', error);
+    });
+
+    //var diffout = document.getElementById('diffout')
+    //diffout.src = i2.toDataURL('image/png')
+    // marker 
+    document.getElementById('caption').style.width = width + "px"
+}
+
+function take_snapshot(image){
+  stream = window.stream;
+
+  
+  const video = document.querySelector('video');
+const canvas = window.canvas = document.getElementById('mycanvas');
+var thing  = document.getElementById('vid');
+console.log("button was clicked"); 
+
+canvas.width = stream.getVideoTracks()[0].getSettings().width ;
+canvas.height = stream.getVideoTracks()[0].getSettings().height ;
+var node = document.getElementById('caption');
+node.width = canvas.width
+node.height= canvas.height
+  //canvas.width = thing.offsetWidth;
+  //canvas.height = thing.offsetHeight;
+  canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+  
+
+
+
+    //var temp = document.createElement("textarea");
+    //document.body.appendChild(temp);
+    //temp.value = document.getElementsByTagName("html")[0].innerHTML;
+    //temp.select();
+    //document.execCommand('copy');
+    //temp.remove();
+    //var temp2 = document.getElementById('caption');
+    //temp2.select();
+
+    var diffcan= document.getElementById("diff");
+
+    var meme = document.getElementById("myimage1");
+          var image_string = canvas.toDataURL();
+          meme.src= image_string;
+  
+  
+    setTimeout(diffit, 1000);
+}
+
+var shutter = document.getElementById('vid')
+var button = document.getElementById('snapshot')
+var button_image_1 = document.getElementById('image1')
+var button_image_2 = document.getElementById('image2')
+
+//button.setAttribute('onclick' , "take_snapshot('hi')")
+button_image_1.setAttribute('onclick' , "take_snapshot('myimage1');")
+button_image_2.setAttribute('onclick' , "take_snapshot('myimage2')")
+
+//shutter.onclick = take_snapshot
+
+//shutter.addEventListener('touchend', take_snapshot);
+
+//shutter.addEventListener("touchend", tapHandler);
+
+var tapedTwice = false;
+
+function tapHandler(event) {
+    if(!tapedTwice) {
+        tapedTwice = true;
+        setTimeout( function() { tapedTwice = false; }, 300 );
+        return false;
+    }
+    event.preventDefault();
+    //action on double tap goes below
+    take_snapshot();
+ }
+
+document.body.onload = function(){
+  //var temp = document.getElementById('caption');
+  //temp.select();
+}
+
+ /**document.body.onload = function(){
+  var saved_picture_string = window.localStorage.getItem('camera_roll');
+  if (saved_picture_string === null){
+    image_array = [];
+  }
+  else{
+  console.log('saved_picture_string' + saved_picture_string)
+  var saved_picture_array = JSON.parse(saved_picture_string);
+  image_array = saved_picture_array;
+  console.log(saved_picture_array.length);
+  
+  for (var i = 0; i<saved_picture_array.length; i++){
+    console.log(i + " iiiiii");
+    var meme = new Image();
+meme.id = 'pic';
+var image_string = saved_picture_array[i];
+meme.src=image_string;
+var container = document.createElement('div');
+container.appendChild(meme);
+var referencenode =  document.getElementById('can')
+referencenode.parentNode.insertBefore(container, referencenode.nextSibling);
+
+  }
+}
+
+ }*/
+
+  // code that will run when the DOMContentLoaded event triggers  
+//var meme = new Image();
+//meme.id = 'pic';
+//meme.src=canvas.toDataURL();
+//document.body.appendChild(meme);
+</script>
+
+
+
+</script>
+
+<script>
+
+
+const defaultOptions = {
+    threshold: 0.05,         // matching threshold (0 to 1); smaller is more sensitive
+    includeAA: false,       // whether to skip anti-aliasing detection
+    alpha: 0.5,             // opacity of original image in diff output
+    aaColor: [255, 0, 0], // color of anti-aliased pixels in diff output
+    diffColor: [255, 0, 0], // color of different pixels in diff output
+    diffColorAlt: [255, 0, 0],     // whether to detect dark on light differences between img1 and img2 and set an alternative color to differentiate between the two
+    diffMask: true         // draw the diff over a transparent background (a mask)
+};
+
+function pixelmatch(img1, img2, output, width, height, options) {
+
+    if (!isPixelData(img1) || !isPixelData(img2) || (output && !isPixelData(output)))
+        throw new Error('Image data: Uint8Array, Uint8ClampedArray or Buffer expected.');
+
+    if (img1.length !== img2.length || (output && output.length !== img1.length))
+        throw new Error('Image sizes do not match.');
+
+    if (img1.length !== width * height * 4) throw new Error('Image data size does not match width/height.');
+
+    options = Object.assign({}, defaultOptions, options);
+
+    // check if images are identical
+    const len = width * height;
+    const a32 = new Uint32Array(img1.buffer, img1.byteOffset, len);
+    const b32 = new Uint32Array(img2.buffer, img2.byteOffset, len);
+    let identical = true;
+
+    for (let i = 0; i < len; i++) {
+        if (a32[i] !== b32[i]) { identical = false; break; }
+    }
+    if (identical) { // fast path if identical
+        if (output && !options.diffMask) {
+            for (let i = 0; i < len; i++) drawGrayPixel(img1, 4 * i, options.alpha, output);
+        }
+        return 0;
+    }
+
+    // maximum acceptable square distance between two colors;
+    // 35215 is the maximum possible value for the YIQ difference metric
+    const maxDelta = 35215 * options.threshold * options.threshold;
+    let diff = 0;
+
+    // compare each pixel of one image against the other one
+    for (let y = 0; y < height; y++) {
+        for (let x = 0; x < width; x++) {
+
+            const pos = (y * width + x) * 4;
+
+            // squared YUV distance between colors at this pixel position, negative if the img2 pixel is darker
+            const delta = colorDelta(img1, img2, pos, pos);
+
+            // the color difference is above the threshold
+            if (Math.abs(delta) > maxDelta) {
+                // check it's a real rendering difference or just anti-aliasing
+                if (!options.includeAA && (antialiased(img1, x, y, width, height, img2) ||
+                                           antialiased(img2, x, y, width, height, img1))) {
+                    // one of the pixels is anti-aliasing; draw as yellow and do not count as difference
+                    // note that we do not include such pixels in a mask
+                    if (output && !options.diffMask) drawPixel(output, pos, ...options.aaColor);
+
+                } else {
+                    // found substantial difference not caused by anti-aliasing; draw it as such
+                    if (output) {
+                        drawPixel(output, pos, ...(delta < 0 && options.diffColorAlt || options.diffColor));
+                    }
+                    diff++;
+                }
+
+            } else if (output) {
+                // pixels are similar; draw background as grayscale image blended with white
+                if (!options.diffMask) drawGrayPixel(img1, pos, options.alpha, output);
+            }
+        }
+    }
+
+    // return the number of different pixels
+    return diff;
+}
+
+function isPixelData(arr) {
+    // work around instanceof Uint8Array not working properly in some Jest environments
+    return ArrayBuffer.isView(arr) && arr.constructor.BYTES_PER_ELEMENT === 1;
+}
+
+// check if a pixel is likely a part of anti-aliasing;
+// based on "Anti-aliased Pixel and Intensity Slope Detector" paper by V. Vysniauskas, 2009
+
+function antialiased(img, x1, y1, width, height, img2) {
+    const x0 = Math.max(x1 - 1, 0);
+    const y0 = Math.max(y1 - 1, 0);
+    const x2 = Math.min(x1 + 1, width - 1);
+    const y2 = Math.min(y1 + 1, height - 1);
+    const pos = (y1 * width + x1) * 4;
+    let zeroes = x1 === x0 || x1 === x2 || y1 === y0 || y1 === y2 ? 1 : 0;
+    let min = 0;
+    let max = 0;
+    let minX, minY, maxX, maxY;
+
+    // go through 8 adjacent pixels
+    for (let x = x0; x <= x2; x++) {
+        for (let y = y0; y <= y2; y++) {
+            if (x === x1 && y === y1) continue;
+
+            // brightness delta between the center pixel and adjacent one
+            const delta = colorDelta(img, img, pos, (y * width + x) * 4, true);
+
+            // count the number of equal, darker and brighter adjacent pixels
+            if (delta === 0) {
+                zeroes++;
+                // if found more than 2 equal siblings, it's definitely not anti-aliasing
+                if (zeroes > 2) return false;
+
+            // remember the darkest pixel
+            } else if (delta < min) {
+                min = delta;
+                minX = x;
+                minY = y;
+
+            // remember the brightest pixel
+            } else if (delta > max) {
+                max = delta;
+                maxX = x;
+                maxY = y;
+            }
+        }
+    }
+
+    // if there are no both darker and brighter pixels among siblings, it's not anti-aliasing
+    if (min === 0 || max === 0) return false;
+
+    // if either the darkest or the brightest pixel has 3+ equal siblings in both images
+    // (definitely not anti-aliased), this pixel is anti-aliased
+    return (hasManySiblings(img, minX, minY, width, height) && hasManySiblings(img2, minX, minY, width, height)) ||
+           (hasManySiblings(img, maxX, maxY, width, height) && hasManySiblings(img2, maxX, maxY, width, height));
+}
+
+// check if a pixel has 3+ adjacent pixels of the same color.
+function hasManySiblings(img, x1, y1, width, height) {
+    const x0 = Math.max(x1 - 1, 0);
+    const y0 = Math.max(y1 - 1, 0);
+    const x2 = Math.min(x1 + 1, width - 1);
+    const y2 = Math.min(y1 + 1, height - 1);
+    const pos = (y1 * width + x1) * 4;
+    let zeroes = x1 === x0 || x1 === x2 || y1 === y0 || y1 === y2 ? 1 : 0;
+
+    // go through 8 adjacent pixels
+    for (let x = x0; x <= x2; x++) {
+        for (let y = y0; y <= y2; y++) {
+            if (x === x1 && y === y1) continue;
+
+            const pos2 = (y * width + x) * 4;
+            if (img[pos] === img[pos2] &&
+                img[pos + 1] === img[pos2 + 1] &&
+                img[pos + 2] === img[pos2 + 2] &&
+                img[pos + 3] === img[pos2 + 3]) zeroes++;
+
+            if (zeroes > 2) return true;
+        }
+    }
+
+    return false;
+}
+
+// calculate color difference according to the paper "Measuring perceived color difference
+// using YIQ NTSC transmission color space in mobile applications" by Y. Kotsarenko and F. Ramos
+
+function colorDelta(img1, img2, k, m, yOnly) {
+    let r1 = img1[k + 0];
+    let g1 = img1[k + 1];
+    let b1 = img1[k + 2];
+    let a1 = img1[k + 3];
+
+    let r2 = img2[m + 0];
+    let g2 = img2[m + 1];
+    let b2 = img2[m + 2];
+    let a2 = img2[m + 3];
+
+    if (a1 === a2 && r1 === r2 && g1 === g2 && b1 === b2) return 0;
+
+    if (a1 < 255) {
+        a1 /= 255;
+        r1 = blend(r1, a1);
+        g1 = blend(g1, a1);
+        b1 = blend(b1, a1);
+    }
+
+    if (a2 < 255) {
+        a2 /= 255;
+        r2 = blend(r2, a2);
+        g2 = blend(g2, a2);
+        b2 = blend(b2, a2);
+    }
+
+    const y1 = rgb2y(r1, g1, b1);
+    const y2 = rgb2y(r2, g2, b2);
+    const y = y1 - y2;
+
+    if (yOnly) return y; // brightness difference only
+
+    const i = rgb2i(r1, g1, b1) - rgb2i(r2, g2, b2);
+    const q = rgb2q(r1, g1, b1) - rgb2q(r2, g2, b2);
+
+    const delta = 0.5053 * y * y + 0.299 * i * i + 0.1957 * q * q;
+
+    // encode whether the pixel lightens or darkens in the sign
+    return y1 > y2 ? -delta : delta;
+}
+
+function rgb2y(r, g, b) { return r * 0.29889531 + g * 0.58662247 + b * 0.11448223; }
+function rgb2i(r, g, b) { return r * 0.59597799 - g * 0.27417610 - b * 0.32180189; }
+function rgb2q(r, g, b) { return r * 0.21147017 - g * 0.52261711 + b * 0.31114694; }
+
+// blend semi-transparent color with white
+function blend(c, a) {
+    return 255 + (c - 255) * a;
+}
+
+function drawPixel(output, pos, r, g, b) {
+    output[pos + 0] = r;
+    output[pos + 1] = g;
+    output[pos + 2] = b;
+    output[pos + 3] = 255;
+}
+
+function drawGrayPixel(img, i, alpha, output) {
+    const r = img[i + 0];
+    const g = img[i + 1];
+    const b = img[i + 2];
+    const val = blend(rgb2y(r, g, b), alpha * img[i + 3] / 255);
+    drawPixel(output, i, val, val, val);
+}
+
+</script>
+
+
+<img id='p1' src="photo-1.jpeg" hidden>
+<img id = 'p2' src="photo-2.jpeg" hidden>
+
+<canvas id="imagecan1" width="750" height="1000" hidden></canvas>
+
+<canvas id="imagecan2" style="width:100%" width="750" height="1000" hidden ></canvas>
+
+<canvas id="diff" style="width:100%" width="750" height="1000" hidden></canvas>
+
+
+
+
+<script>
+
+
+
+
+
+button_diff = document.getElementById('diffit')
+button_diff.setAttribute('onclick' , "diffit()")
+</script>  
+
+</body>
+</html>
