@@ -274,14 +274,25 @@ meme.src= image_string;
 
 //document.body.appendChild(meme);
 var container = document.createElement('div');
-container.appendChild(meme);
+ const downloadlink = document.createElement('a')
+ downloadlink.href = meme.src;
+ downloadlink.download  = "img.png"; 
+ downloadlink.appendChild(meme);
+     
+     container.appendChild(downloadlink);
 var referencenode =  document.getElementById('can')
 referencenode.parentNode.insertBefore(container, referencenode.nextSibling);
+                  downloadlink.click();
 
               }, 0);
             });
           }
-          
+      
+      
+        
+  
+  
+  
 
           
 
