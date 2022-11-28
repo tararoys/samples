@@ -276,7 +276,16 @@ meme.src= image_string;
 var container = document.createElement('div');
  const downloadlink = document.createElement('a')
  downloadlink.href = meme.src;
- downloadlink.download  = "img.png"; 
+var today = new Date();
+var dd = String(today.getDate()).padStart(2, '0');
+var MM = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+var yyyy = String(today.getFullYear());
+var hh= String(today.getHours()).padStart(2, '0'); //time is UTC I assume
+var mm= String(today.getMinutes()).padStart(2, '0'); //timr is UTC I assume
+var ss= String(today.getSeconds()).padStart(2, '0');
+filename = yyyy+ '-' + MM + '-' + dd+  '-' + ss + '-'+ ss + '_' +  '.png';
+console.log(filename);
+ downloadlink.download  = filename; 
  downloadlink.appendChild(meme);
      
      container.appendChild(downloadlink);
