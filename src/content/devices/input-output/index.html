@@ -285,7 +285,8 @@ var mm= String(today.getMinutes()).padStart(2, '0'); //timr is UTC I assume
 var ss= String(today.getSeconds()).padStart(2, '0');
 var datename = yyyy+ '-' + month + '-' + dd+  '-' + ss + '-'+ ss + '_' +  '.png';
 console.log(datename);
- var caption_string=document.getElementById('caption').value
+ var caption_string=String(document.getElementById('caption').value)
+ alert('the string is' + caption_string)
 var punctuationless = caption_string.replace(/\n[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
 var finalString = String(punctuationless.replace(/\s{2,}/g,"_"));
 var full_filename = datename+caption_string;
