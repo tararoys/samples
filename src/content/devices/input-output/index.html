@@ -283,14 +283,11 @@ var yyyy = String(today.getFullYear());
 var hh= String(today.getHours()).padStart(2, '0'); //time is UTC I assume
 var mm= String(today.getMinutes()).padStart(2, '0'); //timr is UTC I assume
 var ss= String(today.getSeconds()).padStart(2, '0');
-var datename = yyyy+ '-' + month + '-' + dd+  '-' + ss + '-'+ ss + '_' +  '.png';
+var datename = yyyy+ '-' + month + '-' + dd+  '-' + ss + '-'+ ss + '_';
 console.log(datename);
  var caption_string=String(document.getElementById('caption').value)
- alert('the string is' + caption_string)
-var punctuationless = caption_string.replace(/[\n.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
-   alert(punctuationless);             
+var punctuationless = caption_string.replace(/[\n.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");       
 var final_string = String(punctuationless.replace(/\s/g,"_"));
-      alert(final_string)
 var full_filename = datename+final_string;
  downloadlink.download= full_filename; 
  downloadlink.appendChild(meme);
@@ -303,17 +300,6 @@ referencenode.parentNode.insertBefore(container, referencenode.nextSibling);
               }, 0);
             });
           }
-      
-      
-        
-  
-  
-  
-
-          
-
-
-        
         
     })
     .catch(function (error) {
