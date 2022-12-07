@@ -159,7 +159,7 @@ function gotStream(stream) {
   var element = document.getElementById('video-box');
   var element2 = document.getElementById('vid'); 
   
-if (mobileCheck()){
+/*if (mobileCheck()){
   
   if (getOrientation() === "Landscape") {
     console.log(getOrientation())
@@ -183,13 +183,14 @@ else{
   element2.style.height = element.style.height;
 
 }
-
+*/
   console.log("width"+ element.style.width);
   console.log("height" + element.style.height);
   console.log(navigator.mediaDevices.enumerateDevices());
   return navigator.mediaDevices.enumerateDevices();
   
 }
+
 
 function handleError(error) {
   console.log('navigator.MediaDevices.getUserMedia error: ', error.message, error.name);
