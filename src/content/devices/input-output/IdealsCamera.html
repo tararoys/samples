@@ -195,7 +195,7 @@ function gotStream(stream) {
 
   console.log(stream)
   console.log( stream.getVideoTracks()[0].getSettings().width);
-	 alert(JSON.stringify(stream.getVideoTracks()[0].getCapabilities()));
+	 //alert(JSON.stringify(stream.getVideoTracks()[0].getCapabilities()));
   // Refresh button list in case labels have become available
   var element = document.getElementById('video-box');
   var element2 = document.getElementById('vid'); 
@@ -250,7 +250,7 @@ function start() {
     video: {
 	    width: {
 	    ideal: 1080 },
-       /* height: { ideal: 2160 },*/
+        height: { ideal: 1920 },
 	    deviceId: videoSource ? {exact: videoSource} : undefined}
   };
   navigator.mediaDevices.getUserMedia(constraints).then(gotStream).then(gotDevices).catch(handleError);
@@ -280,15 +280,15 @@ console.log("button was clicked");
 
   canvas.width = thing.offsetWidth;
   canvas.height = thing.offsetHeight;
-alert('1');
+
 
 var frameRect = thing.getBoundingClientRect();
     var videoRect = document.getElementById('vid').getBoundingClientRect();
     //offset_top=  videoRect.top - frameRect.top;
-  alert('2');
+
 	domtoimage.toPng(thing)
     .then(function (dataUrl) {
-		alert('3');
+m
   
         var img = new Image();
     
