@@ -261,13 +261,10 @@ console.log("button was clicked");
                   // At this point, the page rendering has been updated with the
                   // `drawImage` result (or a later frame's result, see below).
                   var meme = new Image();
-meme.id = 'pic';
-var image_string = canvas.toDataURL();
-meme.src= image_string;
-//image_array.push(image_string);
-//if (image_array.length > 5){ // added because localstorage limits the amount I can put in it, so I can only realistically save the last five pictures.
-//  image_array.shift();
-//}
+                  meme.id = 'pic';
+                  var image_string = canvas.toDataURL();
+                  meme.src= image_string;
+
 
 
 
