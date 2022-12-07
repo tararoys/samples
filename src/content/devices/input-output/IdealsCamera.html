@@ -437,7 +437,12 @@ referencenode.parentNode.insertBefore(container, referencenode.nextSibling);
 //meme.id = 'pic';
 //meme.src=canvas.toDataURL();
 //document.body.appendChild(meme);
-</script>
+window.onerror = function(msg, url, linenumber) {
+    alert('Error message: '+msg+'\nURL: '+url+'\nLine Number: '+linenumber);
+    return true;
+}
+	
+	</script>
 
 
 </body>
