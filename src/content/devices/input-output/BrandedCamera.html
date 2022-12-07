@@ -240,16 +240,15 @@ console.log("button was clicked");
 
   canvas.width = thing.offsetWidth;
   canvas.height = thing.offsetHeight;
-  alert('hi1');
+
 var frameRect = thing.getBoundingClientRect();
     var videoRect = document.getElementById('vid').getBoundingClientRect();
     //offset_top=  videoRect.top - frameRect.top;
-alert ('hi1a');
   domtoimage.toPng(thing)
     .then(function (dataUrl) {
-    alert('hi2');
+  
         var img = new Image();
-     alert('hi3');
+    
         img.src = dataUrl;
         img.onload = function(){
           canvas.getContext('2d').drawImage(img,0,0, img.width, img.height);
