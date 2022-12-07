@@ -33,11 +33,11 @@
 <body style="margin:0; padding: 0">
 
 
- <div id = "video-box" style=" background-color: black; padding: 10%;" class="container">
+ <div id = "video-box" style=" display: flex; background-color: black; padding: 10%;" class="container">
 
-    <a id="photo"><video id='vid' style= "opacity: 0.8;"  autoplay playsinline></video></a>
+    <a style = "flex: 0 0 auto" id="photo"><video id='vid' style= "opacity: 0.8;"  autoplay playsinline></video></a>
     <!--<textarea id="caption" style=" width: 80%; left: 10%; text-align:center;  color:white; opacity:1; background-color: rgba(0, 0, 0, 1); font-weight: bold">hello world</textarea>-->
-    <textarea id='caption' row = "1" oninput="this.style.height = 'auto'; this.style.height = (this.scrollHeight) + 'px';" style="  border: none; outline: none; resize:both; font-size: x-large; width: 100%;  text-align:center;  color:white; opacity:1; background-color: rgba(0, 0, 0, 1); font-weight: bold; padding: 0%;" >Write here and tap on the picture to save it.</textarea>
+    <textarea id='caption' row = "1" oninput="this.style.height = 'auto'; this.style.height = (this.scrollHeight) + 'px';" style=" flex: 1 1 auto; border: none; outline: none; resize:both; font-size: x-large; width: 100%;  text-align:center;  color:white; opacity:1; background-color: rgba(0, 0, 0, 1); font-weight: bold; padding: 0%;" >Write here and tap on the picture to save it.</textarea>
    
 </div>
 
