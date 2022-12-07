@@ -27,15 +27,15 @@
     <!--<link rel="stylesheet" href="../../../css/main.css">-->
     <style>
   * {
-	 padding:2.5px
 	 box-sizing: border-box;
 }
  textarea {
 	 display:block;
+	 background-color:black;
+	 color: white;
     outline: none !important;
     flex: 1 1 auto; 
    width: 100%; 
-  border:none;
 font-family: Marcellus, serif;
 text-align: center;
 	 resize:both; 
@@ -71,7 +71,7 @@ flex: 1 1 auto;
 <body style="margin:0; padding: 10">
 
 
- <div class="box" id = "video-box" style=" display: flex; flex-direction: column; padding:2.5; background-color: black;">
+ <div class="box" id = "video-box" style=" display: flex; flex-direction: column; background-color: black;padding:10px">
       <div class="box"> <textarea id='caption' row = "1" oninput="this.style.height = 'auto'; this.style.height = (this.scrollHeight) + 'px';"  >Write here and tap on the picture to save it.</textarea></div>
    
    <div class="box" > <a  href = "#" onclick="event.preventDefault();take_snapshot();" id="photo"><video id='vid' style= "width: 100%; opacity: 1;"  autoplay playsinline></video></a></div>
