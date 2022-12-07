@@ -33,7 +33,11 @@
 <body style="margin:0; padding: 0">
 
 
- <div id = "video-box" style=" display: flex; flex-direction: column; background-color: black; padding: 10%;" class="container">
+ <div id = "video-box" style=" display: flex; flex-direction: column; background-color: black; padding: 10%; --mask: 
+    linear-gradient(#000 0 0) 50%/calc(100% - 55.50px) calc(100% - 55.50px) no-repeat,
+    radial-gradient(farthest-side,#000 98%,#0000) 0 0/60px 60px round;
+  -webkit-mask: var(--mask);
+          mask: var(--mask);" class="container">
     <textarea id='caption' row = "1" style=" flex: 1 1 auto; border: none; outline: none; resize:both; font-size: x-large; width: 100%;  text-align:center;  color:white; opacity:1; background-color: rgba(0, 0, 0, 1); font-weight: bold; padding: 0%;" >Write here and tap on the picture to save it.</textarea>
    
    <div style = "flex: 0 0 auto"> <a  href = "#" onclick="take_snapshot();event.preventDefault();" id="photo"><video id='vid' style= "width: 100%; opacity: 0.8;"  autoplay playsinline></video></a></div>
