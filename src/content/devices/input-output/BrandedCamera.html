@@ -340,9 +340,11 @@ function doDate()
 
     str += "Today is: " + days[now.getDay()] + ", " + now.getDate() + " " + months[now.getMonth()] + " " + now.getFullYear() + " " + now.getHours() +":" + now.getMinutes() + ":" + now.getSeconds();
     document.getElementById("todaysDate").innerHTML = str;
-    setInterval(doDate, 1000);
+
 
 }
+        
+setInterval(doDate, 1000);
 
 //shutter.addEventListener('touchend', take_snapshot);
 
