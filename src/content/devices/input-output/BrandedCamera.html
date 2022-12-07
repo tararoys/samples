@@ -242,8 +242,8 @@ console.log("button was clicked");
   canvas.height = thing.offsetHeight;
   alert('hi1');
 var frameRect = thing.getBoundingClientRect();
-    videoRect = document.getElementbyId('vid').getBoundingClientRect();
-    offset_top=  videoRect.top - frameRect.top;
+    var videoRect = document.getElementbyId('vid').getBoundingClientRect();
+    //offset_top=  videoRect.top - frameRect.top;
 alert ('hi1a');
   domtoimage.toPng(thing)
     .then(function (dataUrl) {
