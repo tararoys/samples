@@ -241,7 +241,7 @@ console.log("button was clicked");
   canvas.height = thing.offsetHeight;
   canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
 
-  domtoimage.toPng(node)
+  domtoimage.toPng(thing)
     .then(function (dataUrl) {
   
         var img = new Image();
