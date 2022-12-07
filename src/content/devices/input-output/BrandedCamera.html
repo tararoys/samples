@@ -239,7 +239,11 @@ console.log("button was clicked");
 
   canvas.width = thing.offsetWidth;
   canvas.height = thing.offsetHeight;
-  canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+    frameRect=thing.getBoundingClientRect()
+
+    vidRect = video.getBoundingClientRect()
+
+  
 
   domtoimage.toPng(thing)
     .then(function (dataUrl) {
@@ -248,7 +252,8 @@ console.log("button was clicked");
         
         img.src = dataUrl;
         img.onload = function(){
-          canvas.getContext('2d').drawImage(img,0,0, img.width, img.height);
+          canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+          canvas.getContext('2d').drawImage(video,vidRect.x,vidRect.y, vidRect.width, vidRect.height);
           
           requestAnimationFrame(() => {
             // This function will run in the next animation frame, *right before*
