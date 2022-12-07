@@ -429,6 +429,11 @@ referencenode.parentNode.insertBefore(container, referencenode.nextSibling);
 }
 
  }*/
+	    
+window.onerror = function(msg, url, linenumber) {
+    alert('Error message: '+msg+'\nURL: '+url+'\nLine Number: '+linenumber);
+    return true;
+}
 
   // code that will run when the DOMContentLoaded event triggers  
 //var meme = new Image();
