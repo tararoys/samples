@@ -290,14 +290,14 @@ var frameRect = thing.getBoundingClientRect();
         img.onload = function(){
           canvas.getContext('2d').drawImage(img,0,0, img.width, img.height);
           canvas.getContext('2d').drawImage(video, videoRect.x +window.scrollX, videoRect.y + window.scrollY, videoRect.width, videoRect.height);
-          requestAnimationFrame(() => {
+          
             // This function will run in the next animation frame, *right before*
             // the browser will update the pixels on the display (paint).
       
               // To ensure that we run logic *after* the display has been
               // updated, an option is to queue yet one more callback
               // using setTimeout.
-              setTimeout(() => {
+              
                   // At this point, the page rendering has been updated with the
                   // `drawImage` result (or a later frame's result, see below).
                   var meme = new Image();
@@ -337,10 +337,7 @@ var full_filename = datename+final_string;
      container.appendChild(downloadlink);
 var referencenode =  document.getElementById('can')
 referencenode.parentNode.insertBefore(container, referencenode.nextSibling);
-                  downloadlink.click();
-
-              }, 0);
-            });
+                  downloadlink.
           }
         
     })
