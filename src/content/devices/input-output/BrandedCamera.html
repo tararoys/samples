@@ -42,7 +42,7 @@
    
    <div style = "flex: 0 0 auto"> <a  href = "#" onclick="event.preventDefault();take_snapshot();" id="photo"><video id='vid' style= "width: 100%; opacity: 0.8;"  autoplay playsinline></video></a></div>
     <!--<textarea id="caption" style=" width: 80%; left: 10%; text-align:center;  color:white; opacity:1; background-color: rgba(0, 0, 0, 1); font-weight: bold">hello world</textarea>-->
-     <p style = "color:white"> More Branding </p>
+     <p id="todaysDate" style = "color:white"> More Branding </p>
 </div>
 
 <div class="select">
@@ -327,7 +327,22 @@ referencenode.parentNode.insertBefore(container, referencenode.nextSibling);
 var shutter = document.getElementById('vid')
 var button = document.getElementById('snapshot')
 button.onclick = take_snapshot
+        
 
+function doDate()
+{
+    var str = "";
+
+    var days = new Array("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
+    var months = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+
+    var now = new Date();
+
+    str += "Today is: " + days[now.getDay()] + ", " + now.getDate() + " " + months[now.getMonth()] + " " + now.getFullYear() + " " + now.getHours() +":" + now.getMinutes() + ":" + now.getSeconds();
+    document.getElementById("todaysDate").innerHTML = str;
+    setInterval(doDate, 1000);
+
+}
 
 //shutter.addEventListener('touchend', take_snapshot);
 
@@ -388,3 +403,8 @@ referencenode.parentNode.insertBefore(container, referencenode.nextSibling);
 
 </body>
 </html>
+
+
+
+
+
