@@ -195,6 +195,7 @@ function gotStream(stream) {
 
   console.log(stream)
   console.log( stream.getVideoTracks()[0].getSettings().width)
+	 alert(stream.getVideoTracks()[0].getCapabilities())
   // Refresh button list in case labels have become available
   var element = document.getElementById('video-box');
   var element2 = document.getElementById('vid'); 
