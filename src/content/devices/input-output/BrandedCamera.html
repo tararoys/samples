@@ -235,13 +235,14 @@ function take_snapshot(){
   const video = document.querySelector('video');
 const canvas = window.canvas = document.getElementById('mycanvas');
 var thing  = document.getElementById('video-box');
+var movie_box  = document.getElementById('vid');
 console.log("button was clicked");
 
   canvas.width = thing.offsetWidth;
   canvas.height = thing.offsetHeight;
     frameRect=thing.getBoundingClientRect()
 
-    vidRect = video.getBoundingClientRect()
+    vidRect = movie_box.getBoundingClientRect()
 
   
 
