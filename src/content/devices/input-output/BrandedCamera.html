@@ -40,9 +40,9 @@
           mask: var(--mask);" class="container">
     <textarea id='caption' row = "1" oninput="this.style.height = 'auto'; this.style.height = (this.scrollHeight) + 'px';" style=" flex: 1 1 auto; border: none; outline: none; resize:both; font-size: x-large; width: 100%;  text-align:center;  color:white; opacity:1; background-color: rgba(0, 0, 0, 1); font-weight: bold; padding: 0%;" >Write here and tap on the picture to save it.</textarea>
    
-   <div style = "flex: 0 0 auto"> <a  href = "#" onclick="event.preventDefault(), take_snapshot();" id="photo"><video id='vid' style= "width: 100%; opacity: 0.8;"  autoplay playsinline></video></a></div>
+   <div style = "flex: 0 0 auto"> <a  href = "#" onclick="take_snapshot();event.preventDefault();" id="photo"><video id='vid' style= "width: 100%; opacity: 0.8;"  autoplay playsinline></video></a></div>
     <!--<textarea id="caption" style=" width: 80%; left: 10%; text-align:center;  color:white; opacity:1; background-color: rgba(0, 0, 0, 1); font-weight: bold">hello world</textarea>-->
-     <p style="color:white"> hello world </p>
+    
 </div>
 
 <div class="select">
@@ -235,27 +235,24 @@ function take_snapshot(){
   const video = document.querySelector('video');
 const canvas = window.canvas = document.getElementById('mycanvas');
 var thing  = document.getElementById('video-box');
-var movie_box  = document.getElementById('vid');
 console.log("button was clicked");
 
   canvas.width = thing.offsetWidth;
   canvas.height = thing.offsetHeight;
-    frameRect=thing.getBoundingClientRect()
-
-    vidRect = movie_box.getBoundingClientRect()
-
-  
+  alert ('hi1');
+var frameRect = thing.getBoundingClientRect(),
+    videoRect = document.getElementbyId('vid').getBoundingClientRect(),
+    offset_top=  videoRect.top - frameRect.top;
 
   domtoimage.toPng(thing)
     .then(function (dataUrl) {
-  
+    alert ('hi2');
         var img = new Image();
-        
+     alert ('hi3');
         img.src = dataUrl;
         img.onload = function(){
-          canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
-          canvas.getContext('2d').drawImage(video,vidRect.x,vidRect.y, vidRect.width, vidRect.height);
-          
+          canvas.getContext('2d').drawImage(img,0,0, img.width, img.height);
+          canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
           requestAnimationFrame(() => {
             // This function will run in the next animation frame, *right before*
             // the browser will update the pixels on the display (paint).
