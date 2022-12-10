@@ -393,11 +393,12 @@ node.width = canvas.width
 node.height= canvas.height
   //canvas.width = thing.offsetWidth;
   //canvas.height = thing.offsetHeight;
-  var arc = document.getElementById('uploadPicture')
+  var arc = URL.createObjectURL(document.getElementById('uploadPicture').files[0]);
   alert(arc);
 alert(arc.val);
    var arcim = new Image();
     arcim.src = arc
+    URL(revokeObjectURL(arcim.src);
    canvas.getContext('2d').drawImage(arcim, 0, 0, canvas.width, canvas.height);
   
 
