@@ -240,9 +240,10 @@ window.onresize = start()
 function diffit() {
   var diffcan= document.getElementById("diff");
   
-  var img1 = document.getElementById("myimage1");
-  var width = img1.naturalWidth
-  var height = img1.naturalHeight
+  var img1 = new Image();
+   img1.src = document.getElementById("uploadPicture");
+  var width = img1.naturalWidth;
+  var height = img1.naturalHeight;
   
   
   var diffctx = diffcan.getContext("2d");
