@@ -407,7 +407,7 @@ node.height= canvas.height
 
     var diffcan= document.getElementById("diff");
 
-    var meme = document.getElementById("myimage1");
+    var meme = document.getElementById("uploadPicture").val;
           var image_string = canvas.toDataURL();
           meme.src= image_string;
   
@@ -421,7 +421,7 @@ var button_image_1 = document.getElementById('image1')
 var button_image_2 = document.getElementById('image2')
 
 //button.setAttribute('onclick' , "take_snapshot('hi')")
-button_image_1.setAttribute('onclick' , "take_snapshot('myimage1');")
+button_image_1.setAttribute('onclick' , "take_snapshot('uploadPicture');")
 button_image_2.setAttribute('onclick' , "take_snapshot('myimage2')")
 
 //shutter.onclick = take_snapshot
