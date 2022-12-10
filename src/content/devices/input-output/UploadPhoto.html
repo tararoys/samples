@@ -30,7 +30,7 @@
 
 <body style="margin:0; padding: 0">
 
-  <input type="file" id="uploadPicture" value="123">
+  <input type="file" id="uploadPicture">
   
   <div id = "video-box" style=" position: relative; width: 20%; height: 20%" class="container">
 
@@ -242,8 +242,10 @@ function diffit() {
   
   var img1 = new Image();
    img1.src = document.getElementById("uploadPicture").val;
+console.log(img1);
   var width = img1.naturalWidth;
   var height = img1.naturalHeight;
+alert(width + " " + height);
   
   
   var diffctx = diffcan.getContext("2d");
