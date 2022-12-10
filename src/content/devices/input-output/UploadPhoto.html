@@ -391,7 +391,8 @@ node.width = canvas.width
 node.height= canvas.height
   //canvas.width = thing.offsetWidth;
   //canvas.height = thing.offsetHeight;
-  canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+  var arc = document.getElementById('uploadPhoto').val
+   canvas.getContext('2d').drawImage(arc, 0, 0, canvas.width, canvas.height);
   
 
 
@@ -407,7 +408,7 @@ node.height= canvas.height
 
     var diffcan= document.getElementById("diff");
 
-    var meme = document.getElementById("uploadPicture").val;
+    var meme = document.getElementById("image1");
           var image_string = canvas.toDataURL();
           meme.src= image_string;
   
