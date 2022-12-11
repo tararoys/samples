@@ -277,6 +277,8 @@ function drawGrayPixel(img, i, alpha, output) {
     originalctx = originalImage.getContext('2d');
     resizedctx = resizedImage.getContext('2d');
     outputctx = output.getContext('2d');
+    outputctx.fillStyle="white";
+    outputctx.fillRect(0,0,output.width, output.height);
 
     arcim = document.getElementById('hello');
     originalctx.drawImage(arcim,0,0);
@@ -284,7 +286,7 @@ function drawGrayPixel(img, i, alpha, output) {
 
     var imag1 = originalctx.getImageData(0, 0, width, height);
     var imag2 = resizedctx.getImageData(0, 0, width, height);
-    var outputthing = outputctx.createImageData(width,height)
+    var outputthing = outputctx.getImageData(0,0, width,height)
 
     pixelmatch(imag1.data, imag2.data, outputthing.data, width,height);
 outputctx.putImageData(outputthing,0,0);
@@ -317,7 +319,7 @@ document.getElementById('download').href=dataUrl;
 <script>
     window.onload =function(){
     var thing = document.getElementById("uploadPicture");
-    alert(thing);
+
     thing.addEventListener("change", jabberwok, false);
     }
 
