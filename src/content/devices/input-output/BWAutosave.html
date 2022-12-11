@@ -281,7 +281,7 @@ function diffit() {
     diffctx.fillRect(0, 0, width, height);
     diffctx.putImageData(diff, 0, 0);
     
-    var imageData = diffctx.getImageData(0, 0, width, height);
+    /*var imageData = diffctx.getImageData(0, 0, width, height);
     var pixels = imageData.data;
 
     // Loop through set of fours due to four color channels: red, green, blue, alpha
@@ -312,7 +312,7 @@ function diffit() {
       }
       
       //imageData.data = pixels;
-      i2ctx.putImageData(imageData, 0, 0);
+      i2ctx.putImageData(imageData, 0, 0);*/
     
     
     i2ctx.drawImage(diffcan, 0, 0);
