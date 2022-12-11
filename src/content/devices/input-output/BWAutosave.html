@@ -54,7 +54,7 @@
 <canvas id = 'mycanvas'  hidden></canvas>
 </div>
 <div>
-  <img id="myimage1" src="">
+    <a id='download' href='' download> <img id="myimage1" src=""></a>
   <img id="myimage2" src="">
 </div> 
 
@@ -338,6 +338,8 @@ function diffit() {
           var meme = document.getElementById("myimage1");
           var image_string = i2.toDataURL();
           meme.src= image_string;
+          var download= document.getElementById('download');
+          download.href=image_string;
           
           requestAnimationFrame(() => {
             // This function will run in the next animation frame, *right before*
