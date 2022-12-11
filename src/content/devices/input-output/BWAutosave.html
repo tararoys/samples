@@ -269,7 +269,7 @@ function diffit() {
   //alert(img1)
   
   //i2ctx.scale(.995, .995)
-  i2ctx.translate(2, 5)
+  i2ctx.translate(2, 2)
   i2ctx.drawImage(img1,0,0)
 
   //i2ctx.drawImage(img2, 0, 0);
@@ -490,12 +490,12 @@ referencenode.parentNode.insertBefore(container, referencenode.nextSibling);
 
 
 const defaultOptions = {
-    threshold: 0.03,         // matching threshold (0 to 1); smaller is more sensitive
+    threshold: 0.04,         // matching threshold (0 to 1); smaller is more sensitive
     includeAA: false,       // whether to skip anti-aliasing detection
     alpha: 0.5,             // opacity of original image in diff output
     aaColor: [0, 0, 0], // color of anti-aliased pixels in diff output
     diffColor: [0, 0, 0], // color of different pixels in diff output
-    diffColorAlt: [170, 170, 170],     // whether to detect dark on light differences between img1 and img2 and set an alternative color to differentiate between the two
+    diffColorAlt: [0, 0, 0],     // whether to detect dark on light differences between img1 and img2 and set an alternative color to differentiate between the two
     diffMask: true         // draw the diff over a transparent background (a mask)
 };
 
