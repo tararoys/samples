@@ -280,7 +280,7 @@ function drawGrayPixel(img, i, alpha, output) {
 
     arcim = document.getElementById('hello');
     originalctx.drawImage(arcim,0,0);
-    resizedctx.drawImage(arcim,5,5, width-10, height - 10);
+    resizedctx.drawImage(arcim,20,20, width-40, height - 40);
 
     var imag1 = originalctx.getImageData(0, 0, width, height);
     var imag2 = resizedctx.getImageData(0, 0, width, height);
