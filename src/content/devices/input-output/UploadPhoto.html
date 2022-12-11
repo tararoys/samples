@@ -241,17 +241,16 @@ function drawGrayPixel(img, i, alpha, output) {
 <script>
     function jabberwok() {
         file = document.getElementById('uploadPicture').files[0];
-        alert(document.getElementById('uploadPicture').files.length)
         var arc = URL.createObjectURL(file);
         const e = document.getElementById('hello');
         if(e){
         e.parentElement.removeChild(e);
-        alert('oooo?')
         }
    var arcim = new Image();
    arcim.id="hello"
    //arcim.hidden="true"
     arcim.src = arc;
+    arcim.style='width:100%';
     URL.revokeObjectURL(arcim.src);
     document.body.appendChild(arcim);
 
@@ -265,8 +264,8 @@ function drawGrayPixel(img, i, alpha, output) {
     resizedImage=document.getElementById("input2");
     output = document.getElementById('output')
 
-        width = image.width;
-        height = image.height; 
+        width = image.naturalWidth;
+        height = image.naturalHeight; 
 
     originalImage.width=width;
     originalImage.height=height;
@@ -285,10 +284,13 @@ function drawGrayPixel(img, i, alpha, output) {
 
     var imag1 = originalctx.getImageData(0, 0, width, height);
     var imag2 = resizedctx.getImageData(0, 0, width, height);
-    var output = outputctx.createImageData(width,height)
+    var outputthing = outputctx.createImageData(width,height)
 
-    pixelmatch(imag1.data, imag2.data, output.data, width,height);
-outputctx.putImageData(output,0,0);
+    pixelmatch(imag1.data, imag2.data, outputthing.data, width,height);
+outputctx.putImageData(outputthing,0,0);
+     dataUrl = output.toDataURL();
+document.getElementById('image_output').src=dataUrl;
+document.getElementById('download').href=dataUrl;
     }
 
 </script>
@@ -296,16 +298,13 @@ outputctx.putImageData(output,0,0);
 <body>
 
     <div>
-  <input type="file" id="uploadPicture"><br>
-  <button onclick="jabberwok()">cartoonize Photo</button>
+  <input style="padding 10%;  width:50%" type="file" id="uploadPicture"><br>
+  <button style=" padding 10%; width:50%" onclick="jabberwok()">cartoonize Photo</button>
 </div>
-  <canvas id="output"></canvas>
+  <a id='download' href="" download> <img id="image_output" style="width:100%;" src=""></a>
+  <canvas id="output" hidden></canvas>
   <canvas id="input1" hidden></canvas>
   <canvas id="input2" hidden></canvas>
-
-
-
- 
 
 
 </body>
