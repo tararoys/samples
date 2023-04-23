@@ -285,15 +285,19 @@ var hh= String(today.getHours()).padStart(2, '0'); //time is UTC I assume
 var mm= String(today.getMinutes()).padStart(2, '0'); //timr is UTC I assume
 var ss= String(today.getSeconds()).padStart(2, '0');
 var datename = yyyy+ '-' + month + '-' + dd+  '-' + ss + '-'+ ss + '-';
+var caption_to_append = document.createElement('p');
+         
 window.location.hash = datename;
 console.log(datename);
- var caption_string=String(document.getElementById('caption').value)
+ var caption_string=String(document.getElementById('caption').value);
+   caption_to_append.innerText = caption_string;               
  meme.alt = caption_string;
 var punctuationless = caption_string.replace(/[\n.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");       
 var final_string = String(punctuationless.replace(/\s/g,"_"));
 var full_filename = datename+final_string;
  downloadlink.download= full_filename; 
  downloadlink.appendChild(meme);
+ downloadlink.appendChild(caption_to_append);
      
      container.appendChild(downloadlink);
 var referencenode =  document.getElementById('can')
