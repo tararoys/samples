@@ -284,7 +284,8 @@ var yyyy = String(today.getFullYear());
 var hh= String(today.getHours()).padStart(2, '0'); //time is UTC I assume
 var mm= String(today.getMinutes()).padStart(2, '0'); //timr is UTC I assume
 var ss= String(today.getSeconds()).padStart(2, '0');
-var datename = yyyy+ '-' + month + '-' + dd+  '-' + ss + '-'+ ss + '_';
+var datename = yyyy+ '-' + month + '-' + dd+  '-' + ss + '-'+ ss + '-';
+window.location.hash = datename;
 console.log(datename);
  var caption_string=String(document.getElementById('caption').value)
 var punctuationless = caption_string.replace(/[\n.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");       
