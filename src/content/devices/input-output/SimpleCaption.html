@@ -288,6 +288,7 @@ var datename = yyyy+ '-' + month + '-' + dd+  '-' + ss + '-'+ ss + '-';
 window.location.hash = datename;
 console.log(datename);
  var caption_string=String(document.getElementById('caption').value)
+ meme.alt = caption_string;
 var punctuationless = caption_string.replace(/[\n.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");       
 var final_string = String(punctuationless.replace(/\s/g,"_"));
 var full_filename = datename+final_string;
