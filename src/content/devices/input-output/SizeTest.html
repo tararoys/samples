@@ -205,7 +205,12 @@ function start() {
   const videoSource = videoSelect.value;
   const constraints = {
     //audio: {deviceId: audioSource ? {exact: audioSource} : undefined},
-    video: {facingMode: { exact: "environment" }, deviceId: videoSource ? {exact: videoSource} : undefined}
+    video: {facingMode: { exact: "environment" },
+            deviceId: videoSource ? {exact: videoSource} : undefined,
+            "mandatory": {
+              "maxWidth": "300",
+              "maxHeight": "400"  }
+           
  
   };
   navigator.mediaDevices.getUserMedia(constraints).then(gotStream).then(gotDevices).catch(handleError);
