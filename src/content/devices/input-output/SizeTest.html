@@ -207,9 +207,9 @@ function start() {
     //audio: {deviceId: audioSource ? {exact: audioSource} : undefined},
     video: {facingMode: { exact: "environment" },
             deviceId: videoSource ? {exact: videoSource} : undefined,
-            "mandatory": {
-              "maxWidth": "300",
-              "maxHeight": "400"  }
+           width:{max:300}
+           }
+            
            
  
   };
