@@ -374,14 +374,14 @@ function diffit() {
     document.getElementById('caption').style.width = width + "px"
 }
 
-function take_snapshot(image){
+function take_snapshot(image_id, canvas_id){
     //uses the camera to take a picture and save it to the image element passed in as a parameter. 
   
     stream = window.stream;
 
   
   const video = document.querySelector('video');
-const canvas = window.canvas = document.getElementById('videocanvas');
+const canvas = window.canvas = document.getElementById(canvas_id);
 var thing  = document.getElementById('vid');
 console.log("button was clicked"); 
 
@@ -408,7 +408,7 @@ node.height= canvas.height
 
     var diffcan= document.getElementById("diff");
 
-    var meme = document.getElementById("frame1");
+    var meme = document.getElementById(image_id);
           var image_string = canvas.toDataURL();
           meme.src= image_string;
   
@@ -422,8 +422,8 @@ var button_image_1 = document.getElementById('take_first_picture')
 var button_image_2 = document.getElementById('take_second_picture')
 
 //button.setAttribute('onclick' , "take_snapshot('hi')")
-button_image_1.setAttribute('onclick' , "take_snapshot('frame1');")
-button_image_2.setAttribute('onclick' , "take_snapshot('frame2')")
+button_image_1.setAttribute('onclick' , "take_snapshot('frame1', 'imagecan1');")
+button_image_2.setAttribute('onclick' , "take_snapshot('frame2', 'imagecan2')")
 
 //shutter.onclick = take_snapshot
 
