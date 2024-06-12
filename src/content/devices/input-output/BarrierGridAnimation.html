@@ -20,7 +20,7 @@
 
     <base target="_blank">
 
-    <title>Black And White Caption Camera</title>
+    <title>Barrier Grid Animation</title>
 
     <link rel="icon" sizes="192x192" href="../../../images/webrtc-icon-192x192.png">
     <!--<link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css">-->
@@ -37,8 +37,8 @@
 </div>
 <textarea id='caption' row = "1" oninput="this.style.height = 'auto'; this.style.height = (this.scrollHeight) + 'px';" style="  border: none; outline: none; z-index: 9; resize:both;  font-size: x-large; width: 100%;  text-align:center;  color:white; opacity:1; background-color: rgba(0, 0, 0, 1); font-weight: bold; padding: 0%;" >Write here and tap on the picture to save it.</textarea>
    
-<button id="image1" style="height:100px"> Step 1: take picture of first image</button>
-  <button id="image2" style = "height:100px" > Step 2: Take picture of second image</button>
+<button id="take_first_picture" style="height:100px"> Step 1: take picture of first image</button>
+  <button id="take_second_picture" style = "height:100px" > Step 2: Take picture of second image</button>
 <button id="diffit" style = 'height:100px' hidden = "true"> Step 3: find differences between two images </button>
 <img id='diffout'>   
 <img id='output' hidden> 
@@ -50,9 +50,10 @@
 </div>
 
 
-<div id = "can">
-<canvas id = 'mycanvas' ></canvas>
+<div id = 'can'>
+<canvas id = 'videocanvas' ></canvas>
 </div>
+
 <div>
   <img id="frame1" src="">
   <img id="frame2" src="">
@@ -380,7 +381,7 @@ function take_snapshot(image){
 
   
   const video = document.querySelector('video');
-const canvas = window.canvas = document.getElementById('mycanvas');
+const canvas = window.canvas = document.getElementById('videocanvas');
 var thing  = document.getElementById('vid');
 console.log("button was clicked"); 
 
@@ -417,8 +418,8 @@ node.height= canvas.height
 
 var shutter = document.getElementById('vid')
 var button = document.getElementById('snapshot')
-var button_image_1 = document.getElementById('image1')
-var button_image_2 = document.getElementById('image2')
+var button_image_1 = document.getElementById('take_first_picture')
+var button_image_2 = document.getElementById('take_second_picture')
 
 //button.setAttribute('onclick' , "take_snapshot('hi')")
 button_image_1.setAttribute('onclick' , "take_snapshot('frame1');")
