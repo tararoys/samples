@@ -51,11 +51,11 @@
 
 
 <div id = "can">
-<canvas id = 'mycanvas'  hidden></canvas>
+<canvas id = 'mycanvas' ></canvas>
 </div>
 <div>
-  <img id="myimage1" src="">
-  <img id="myimage2" src="">
+  <img id="frame1" src="">
+  <img id="frame2" src="">
 </div> 
 
 <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
@@ -238,7 +238,7 @@ window.onresize = start()
 function diffit() {
   var diffcan= document.getElementById("diff");
   
-  var img1 = document.getElementById("myimage1");
+  var img1 = document.getElementById("frame1");
   var width = img1.naturalWidth
   var height = img1.naturalHeight
   
@@ -265,7 +265,7 @@ function diffit() {
   //alert(i1)
   var i2ctx = i2.getContext("2d");
   //alert(i1ctx)
-  var img2 = document.getElementById("myimage2");
+  var img2 = document.getElementById("frame2");
   //alert(img1)
   
   i2ctx.scale(.96, .96)
@@ -335,7 +335,7 @@ function diffit() {
         img.src = dataUrl;
         img.onload = function(){
           i2ctx.drawImage(img,0,0, img.width, img.height);
-          var meme = document.getElementById("myimage1");
+          var meme = document.getElementById("frame1");
           var image_string = i2.toDataURL();
           meme.src= image_string;
           
@@ -374,7 +374,9 @@ function diffit() {
 }
 
 function take_snapshot(image){
-  stream = window.stream;
+    //uses the camera to take a picture and save it to the image element passed in as a parameter. 
+  
+    stream = window.stream;
 
   
   const video = document.querySelector('video');
@@ -405,7 +407,7 @@ node.height= canvas.height
 
     var diffcan= document.getElementById("diff");
 
-    var meme = document.getElementById("myimage1");
+    var meme = document.getElementById("frame1");
           var image_string = canvas.toDataURL();
           meme.src= image_string;
   
@@ -419,8 +421,8 @@ var button_image_1 = document.getElementById('image1')
 var button_image_2 = document.getElementById('image2')
 
 //button.setAttribute('onclick' , "take_snapshot('hi')")
-button_image_1.setAttribute('onclick' , "take_snapshot('myimage1');")
-button_image_2.setAttribute('onclick' , "take_snapshot('myimage2')")
+button_image_1.setAttribute('onclick' , "take_snapshot('frame1');")
+button_image_2.setAttribute('onclick' , "take_snapshot('frame2')")
 
 //shutter.onclick = take_snapshot
 
