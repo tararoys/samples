@@ -39,7 +39,7 @@
    
 <button id="take_first_picture" style="height:100px"> Step 1: take picture of first image</button>
   <button id="take_second_picture" style = "height:100px" > Step 2: Take picture of second image</button>
-<button id="diffit" style = 'height:100px' hidden = "true"> Step 3: find differences between two images </button>
+<button id="diffit" style = 'height:100px' > Step 3: Turn The Images Black And White </button>
 <img id='diffout'>   
 <img id='output' hidden> 
 
@@ -393,18 +393,7 @@ node.height= canvas.height
   //canvas.width = thing.offsetWidth;
   //canvas.height = thing.offsetHeight;
   canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-  
 
-
-
-    //var temp = document.createElement("textarea");
-    //document.body.appendChild(temp);
-    //temp.value = document.getElementsByTagName("html")[0].innerHTML;
-    //temp.select();
-    //document.execCommand('copy');
-    //temp.remove();
-    //var temp2 = document.getElementById('caption');
-    //temp2.select();
 
     var diffcan= document.getElementById("diff");
 
@@ -413,7 +402,7 @@ node.height= canvas.height
           meme.src= image_string;
   
   
-    setTimeout(diffit, 1000);
+    //setTimeout(diffit, 1000);
 }
 
 var shutter = document.getElementById('vid')
