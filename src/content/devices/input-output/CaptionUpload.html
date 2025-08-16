@@ -1,0 +1,440 @@
+
+
+
+
+<input type="file" accept="image/*" onchange="readURL(this);document.getElementById('image2').hidden=false;"><br> (select an image) <br>
+
+<label>scale (suggested value 1.01 or .99 gives a nice cartoonized effect</label> 
+<input id='scale' type="number"  value = "1" step= ".001"><br>
+<label>translate x pixels (suggested value 1 makes a thin cartoon line along every visible edge that is up and down) </label>
+<input id='translatex' type="number"  value = "1" step= "1">
+<label>translate y pixels (Suggested vlue 1 makes a thin cartoon linealong every visible horizontal edge</label>
+<input id='translatey' type="number"  value = "1" step= "1"><br>
+
+<label> threshold (smaller values is darker and more detailed, larger values are lighter and less detailed.</label>
+<input id=threshold type="number"  value = "0.005" min='0' max='1' step= ".001"><br>
+<label> include AA </label>
+<input id="antialiasing">
+<label> alpha </label>
+<input id="alpha" type="number" value=".05" min='0' max='1' step= ".001">
+<label> </label><br>
+
+<label> aaColor (i think this value is irrelevant</label> 
+<input id = "aaredchannel" type=number value="0">
+<input id = "aagreenchannel" type=number value="0">
+<input id = "aabluechannel" type=number value="0"><br>
+
+<label> diffColor (very importsnt)  </label> 
+<input id = "diffredchannel" type=number value="0">
+<input id = "diffgreenchannel" type=number value="0">
+<input id = "diffbluechannel" type=number value="0"><br>
+
+<label> diffColorAlt (very important, recommend all channels either be 0 (black) on a white background or 255 (black) on a white background. </label> 
+<input id = "diffaltredchannel" type=number value="0">
+<input id = "diffaltgreenchannel" type=number value="0">
+<input id = "diffaltbluechannel" type=number value="0"><br>
+<label> diffmask (irrelevsnt)  </label>
+  <input value = "true" id="diffmask"><br>
+	
+<label> background color (recommenr white or black)</label>
+  <input value = "white" id="bgcolor" ><br>
+	
+
+	
+
+<br>
+  <button id="image2" style = height:100px onclick='diffit();' hidden>lineart</button>
+
+
+<img id="photo"  src="http://placehold.it/180" alt="your image" >
+
+<canvas id="original-image" hidden></canvas>
+
+<canvas id="slightly-shifted-image" hidden></canvas>
+
+<canvas id="line-drawing" hidden></canvas>
+
+
+<canvas id="captioned-line-drawing" hidden></canvas>
+
+
+<label> font-size </label>
+<input id='font-size' type=number value="72"><br>
+
+<textarea id='caption' row = "1" oninput="this.style.height = 'auto'; this.style.height = (this.scrollHeight) + 'px'; this.style.width=getElementById('output').width; this.style.fontSize=''+ getElementById('font-size').value+'px';" style="  border: none; outline: none;  top: 0; resize:both; text-align:center;  color:white; opacity:1; background-color: rgba(0, 0, 0, 1); font-weight: bold; padding: 0%;"  >Write here and tap on the picture to save it</textarea>
+<button id="finalpic" onclick='caption_click()'>add text to pic</button>
+
+<img id="output" src="placeholder">
+
+
+
+
+<script>
+	
+function diffit(){
+
+	document.getElementById('caption').style.width=document.getElementById('photo').naturalwidth;
+	document.getElementById('caption').style.fontSize=document.getElementById('font-size').value;
+	
+	
+  
+  
+  var img1 = document.getElementById("photo");
+  var width = img1.naturalWidth;
+  var height = img1.naturalHeight;
+  
+  var original= document.getElementById("original-image");
+  //alert(i1)
+  var originalctx = original.getContext("2d");
+  //alert(i1ctx)
+	original.width=width
+  original.height=height
+	originalctx.drawImage(img1, 0, 0);
+	
+	var shifted=document.getElementById("slightly-shifted-image");
+	var shiftedctx = shifted.getContext("2d");
+	shifted.height=height;
+  shifted.width=width;
+	var scale= document.getElementById("scale").value
+	shiftedctx.scale(scale, scale)
+	var translatex= document.getElementById("translatex").value;
+	var translatey= document.getElementById("translatey").value;
+  shiftedctx.translate(translatex, translatey);
+	shiftedctx.drawImage(img1,0,0)
+  
+  var line_drawing=document.getElementById("line-drawing");
+	var line_drawingctx = line_drawing.getContext("2d");
+	line_drawing.height=height;
+  line_drawing.width=width;
+	line_drawingctx.fillStyle = document.getElementById("bgcolor").value;
+  line_drawingctx.fillRect(0, 0, width, height);
+	//line_drawingctx.drawImage(img1, 0, 0);
+  
+	var captioned_line_drawing=document.getElementById("captioned-line-drawing");
+	var captioned_line_drawingctx = captioned_line_drawing.getContext("2d");
+	captioned_line_drawing.height=height;
+  captioned_line_drawing.width=width;
+	captioned_line_drawingctx.fillStyle = document.getElementById("bgcolor").value;
+  captioned_line_drawingctx.fillRect(0, 0, width, height);
+	//line_drawingctx.drawImage(img1, 0, 0);
+ 
+  
+    var original_bitwise = originalctx.getImageData(0, 0, width, height);
+    var shifted_bitwise = shiftedctx.getImageData(0, 0, width, height);
+		var line_drawing_bitwise = line_drawingctx.getImageData(0, 0, width, height);
+	  var captioned_line_drawing_bitwise = captioned_line_drawingctx.getImageData(0, 0, width, height);
+		
+ options = {
+    threshold: document.getElementById("threshold").value,         // matching threshold (0 to 1); smaller is more sensitive
+    includeAA: false, //document.getElementById("antialiasing").value,       // whether to skip anti-aliasing detection
+    alpha: document.getElementById("alpha").value,             // opacity of original image in diff output
+    aaColor: [document.getElementById("aaredchannel").value, document.getElementById("aagreenchannel").value, document.getElementById("aabluechannel").value], // color of anti-aliased pixels in diff output
+    diffColor:[document.getElementById("diffredchannel").value, document.getElementById("diffgreenchannel").value, document.getElementById("diffbluechannel").value], // color of different pixels in diff output
+    diffColorAlt: [document.getElementById("diffaltredchannel").value, document.getElementById("diffaltgreenchannel").value, document.getElementById("diffaltbluechannel").value],     // whether to detect dark on light differences between img1 and img2 and set an alternative color to differentiate between the two
+    diffMask: true         // draw the diff over a transparent background (a mask)
+}
+	   pixelmatch(original_bitwise.data, shifted_bitwise.data, line_drawing_bitwise.data, height, width, options);
+    
+   line_drawingctx.putImageData(line_drawing_bitwise, 0, 0);
+	 
+	 captioned_line_drawingctx.putImageData(line_drawing_bitwise, 0, 0);
+	 
+	 var caption = document.getElementById('caption');
+	caption.width=width;
+
+
+    
+		var final_drawing = document.getElementById('output');
+    final_drawing.src = captioned_line_drawing.toDataURL('image/png');
+	
+}
+</script>
+
+<script>
+	
+	//this function takes uploaded photo and didplays it life-size.
+	function readURL(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+document.querySelector('#photo').setAttribute('src',e.target.result )
+                
+                };
+
+              reader.readAsDataURL(input.files[0]);
+							
+            }
+						
+        }
+				
+</script>
+
+
+
+<script>
+///pixelmaching code for comparing between two images.
+
+
+
+const defaultOptions = {
+    threshold: .05,         // matching threshold (0 to 1); smaller is more sensitive
+    includeAA: false,       // whether to skip anti-aliasing detection
+    alpha: 0,             // opacity of original image in diff output
+    aaColor: [0, 0, 0], // color of anti-aliased pixels in diff output
+    diffColor: [0, 0, 0], // color of different pixels in diff output
+    diffColorAlt: [255, 255, 255],     // whether to detect dark on light differences between img1 and img2 and set an alternative color to differentiate between the two
+    diffMask: false         // draw the diff over a transparent background (a mask)
+};
+
+function pixelmatch(img1, img2, output, width, height, options) {
+
+    if (!isPixelData(img1) || !isPixelData(img2) || (output && !isPixelData(output)))
+        throw new Error('Image data: Uint8Array, Uint8ClampedArray or Buffer expected.');
+
+    if (img1.length !== img2.length || (output && output.length !== img1.length))
+        throw new Error('Image sizes do not match.');
+
+    if (img1.length !== width * height * 4) throw new Error('Image data size does not match width/height.');
+
+    options = Object.assign({}, defaultOptions, options);
+
+    // check if images are identical
+    const len = width * height;
+    const a32 = new Uint32Array(img1.buffer, img1.byteOffset, len);
+    const b32 = new Uint32Array(img2.buffer, img2.byteOffset, len);
+    let identical = true;
+
+    for (let i = 0; i < len; i++) {
+        if (a32[i] !== b32[i]) { identical = false; break; }
+    }
+    if (identical) { // fast path if identical
+        if (output && !options.diffMask) {
+            for (let i = 0; i < len; i++) drawGrayPixel(img1, 4 * i, options.alpha, output);
+        }
+        return 0;
+    }
+
+    // maximum acceptable square distance between two colors;
+    // 35215 is the maximum possible value for the YIQ difference metric
+    const maxDelta = 35215 * options.threshold * options.threshold;
+    let diff = 0;
+
+    // compare each pixel of one image against the other one
+    for (let y = 0; y < height; y++) {
+        for (let x = 0; x < width; x++) {
+
+            const pos = (y * width + x) * 4;
+
+            // squared YUV distance between colors at this pixel position, negative if the img2 pixel is darker
+            const delta = colorDelta(img1, img2, pos, pos);
+
+            // the color difference is above the threshold
+            if (Math.abs(delta) > maxDelta) {
+                // check it's a real rendering difference or just anti-aliasing
+                if (!options.includeAA && (antialiased(img1, x, y, width, height, img2) ||
+                                           antialiased(img2, x, y, width, height, img1))) {
+                    // one of the pixels is anti-aliasing; draw as yellow and do not count as difference
+                    // note that we do not include such pixels in a mask
+                    if (output && !options.diffMask) drawPixel(output, pos, ...options.aaColor);
+
+                } else {
+                    // found substantial difference not caused by anti-aliasing; draw it as such
+                    if (output) {
+                        drawPixel(output, pos, ...(delta < 0 && options.diffColorAlt || options.diffColor));
+                    }
+                    diff++;
+                }
+
+            } else if (output) {
+                // pixels are similar; draw background as grayscale image blended with white
+                if (!options.diffMask) drawGrayPixel(img1, pos, options.alpha, output);
+            }
+        }
+    }
+
+    // return the number of different pixels
+    return diff;
+}
+
+function isPixelData(arr) {
+    // work around instanceof Uint8Array not working properly in some Jest environments
+    return ArrayBuffer.isView(arr) && arr.constructor.BYTES_PER_ELEMENT === 1;
+}
+
+// check if a pixel is likely a part of anti-aliasing;
+// based on "Anti-aliased Pixel and Intensity Slope Detector" paper by V. Vysniauskas, 2009
+
+function antialiased(img, x1, y1, width, height, img2) {
+    const x0 = Math.max(x1 - 1, 0);
+    const y0 = Math.max(y1 - 1, 0);
+    const x2 = Math.min(x1 + 1, width - 1);
+    const y2 = Math.min(y1 + 1, height - 1);
+    const pos = (y1 * width + x1) * 4;
+    let zeroes = x1 === x0 || x1 === x2 || y1 === y0 || y1 === y2 ? 1 : 0;
+    let min = 0;
+    let max = 0;
+    let minX, minY, maxX, maxY;
+
+    // go through 8 adjacent pixels
+    for (let x = x0; x <= x2; x++) {
+        for (let y = y0; y <= y2; y++) {
+            if (x === x1 && y === y1) continue;
+
+            // brightness delta between the center pixel and adjacent one
+            const delta = colorDelta(img, img, pos, (y * width + x) * 4, true);
+
+            // count the number of equal, darker and brighter adjacent pixels
+            if (delta === 0) {
+                zeroes++;
+                // if found more than 2 equal siblings, it's definitely not anti-aliasing
+                if (zeroes > 2) return false;
+
+            // remember the darkest pixel
+            } else if (delta < min) {
+                min = delta;
+                minX = x;
+                minY = y;
+
+            // remember the brightest pixel
+            } else if (delta > max) {
+                max = delta;
+                maxX = x;
+                maxY = y;
+            }
+        }
+    }
+
+    // if there are no both darker and brighter pixels among siblings, it's not anti-aliasing
+    if (min === 0 || max === 0) return false;
+
+    // if either the darkest or the brightest pixel has 3+ equal siblings in both images
+    // (definitely not anti-aliased), this pixel is anti-aliased
+    return (hasManySiblings(img, minX, minY, width, height) && hasManySiblings(img2, minX, minY, width, height)) ||
+           (hasManySiblings(img, maxX, maxY, width, height) && hasManySiblings(img2, maxX, maxY, width, height));
+}
+
+// check if a pixel has 3+ adjacent pixels of the same color.
+function hasManySiblings(img, x1, y1, width, height) {
+    const x0 = Math.max(x1 - 1, 0);
+    const y0 = Math.max(y1 - 1, 0);
+    const x2 = Math.min(x1 + 1, width - 1);
+    const y2 = Math.min(y1 + 1, height - 1);
+    const pos = (y1 * width + x1) * 4;
+    let zeroes = x1 === x0 || x1 === x2 || y1 === y0 || y1 === y2 ? 1 : 0;
+
+    // go through 8 adjacent pixels
+    for (let x = x0; x <= x2; x++) {
+        for (let y = y0; y <= y2; y++) {
+            if (x === x1 && y === y1) continue;
+
+            const pos2 = (y * width + x) * 4;
+            if (img[pos] === img[pos2] &&
+                img[pos + 1] === img[pos2 + 1] &&
+                img[pos + 2] === img[pos2 + 2] &&
+                img[pos + 3] === img[pos2 + 3]) zeroes++;
+
+            if (zeroes > 2) return true;
+        }
+    }
+
+    return false;
+}
+
+// calculate color difference according to the paper "Measuring perceived color difference
+// using YIQ NTSC transmission color space in mobile applications" by Y. Kotsarenko and F. Ramos
+
+function colorDelta(img1, img2, k, m, yOnly) {
+    let r1 = img1[k + 0];
+    let g1 = img1[k + 1];
+    let b1 = img1[k + 2];
+    let a1 = img1[k + 3];
+
+    let r2 = img2[m + 0];
+    let g2 = img2[m + 1];
+    let b2 = img2[m + 2];
+    let a2 = img2[m + 3];
+
+    if (a1 === a2 && r1 === r2 && g1 === g2 && b1 === b2) return 0;
+
+    if (a1 < 255) {
+        a1 /= 255;
+        r1 = blend(r1, a1);
+        g1 = blend(g1, a1);
+        b1 = blend(b1, a1);
+    }
+
+    if (a2 < 255) {
+        a2 /= 255;
+        r2 = blend(r2, a2);
+        g2 = blend(g2, a2);
+        b2 = blend(b2, a2);
+    }
+
+    const y1 = rgb2y(r1, g1, b1);
+    const y2 = rgb2y(r2, g2, b2);
+    const y = y1 - y2;
+
+    if (yOnly) return y; // brightness difference only
+
+    const i = rgb2i(r1, g1, b1) - rgb2i(r2, g2, b2);
+    const q = rgb2q(r1, g1, b1) - rgb2q(r2, g2, b2);
+
+    const delta = 0.5053 * y * y + 0.299 * i * i + 0.1957 * q * q;
+
+    // encode whether the pixel lightens or darkens in the sign
+    return y1 > y2 ? -delta : delta;
+}
+
+function rgb2y(r, g, b) { return r * 0.29889531 + g * 0.58662247 + b * 0.11448223; }
+function rgb2i(r, g, b) { return r * 0.59597799 - g * 0.27417610 - b * 0.32180189; }
+function rgb2q(r, g, b) { return r * 0.21147017 - g * 0.52261711 + b * 0.31114694; }
+
+// blend semi-transparent color with white
+function blend(c, a) {
+    return 255 + (c - 255) * a;
+}
+
+function drawPixel(output, pos, r, g, b) {
+    output[pos + 0] = r;
+    output[pos + 1] = g;
+    output[pos + 2] = b;
+    output[pos + 3] = 255;
+}
+
+function drawGrayPixel(img, i, alpha, output) {
+    const r = img[i + 0];
+    const g = img[i + 1];
+    const b = img[i + 2];
+    const val = blend(rgb2y(r, g, b), alpha * img[i + 3] / 255);
+    drawPixel(output, i, val, val, val);
+}
+
+</script>
+
+
+<script >/*! dom-to-image 10-06-2017 */
+    !function(a){"use strict";function b(a,b){function c(a){return b.bgcolor&&(a.style.backgroundColor=b.bgcolor),b.width&&(a.style.width=b.width+"px"),b.height&&(a.style.height=b.height+"px"),b.style&&Object.keys(b.style).forEach(function(c){a.style[c]=b.style[c]}),a}return b=b||{},g(b),Promise.resolve(a).then(function(a){return i(a,b.filter,!0)}).then(j).then(k).then(c).then(function(c){return l(c,b.width||q.width(a),b.height||q.height(a))})}function c(a,b){return h(a,b||{}).then(function(b){return b.getContext("2d").getImageData(0,0,q.width(a),q.height(a)).data})}function d(a,b){return h(a,b||{}).then(function(a){return a.toDataURL()})}function e(a,b){return b=b||{},h(a,b).then(function(a){return a.toDataURL("image/jpeg",b.quality||1)})}function f(a,b){return h(a,b||{}).then(q.canvasToBlob)}function g(a){"undefined"==typeof a.imagePlaceholder?v.impl.options.imagePlaceholder=u.imagePlaceholder:v.impl.options.imagePlaceholder=a.imagePlaceholder,"undefined"==typeof a.cacheBust?v.impl.options.cacheBust=u.cacheBust:v.impl.options.cacheBust=a.cacheBust}function h(a,c){function d(a){var b=document.createElement("canvas");if(b.width=c.width||q.width(a),b.height=c.height||q.height(a),c.bgcolor){var d=b.getContext("2d");d.fillStyle=c.bgcolor,d.fillRect(0,0,b.width,b.height)}return b}return b(a,c).then(q.makeImage).then(q.delay(100)).then(function(b){var c=d(a);return c.getContext("2d").drawImage(b,0,0),c})}function i(a,b,c){function d(a){return a instanceof HTMLCanvasElement?q.makeImage(a.toDataURL()):a.cloneNode(!1)}function e(a,b,c){function d(a,b,c){var d=Promise.resolve();return b.forEach(function(b){d=d.then(function(){return i(b,c)}).then(function(b){b&&a.appendChild(b)})}),d}var e=a.childNodes;return 0===e.length?Promise.resolve(b):d(b,q.asArray(e),c).then(function(){return b})}function f(a,b){function c(){function c(a,b){function c(a,b){q.asArray(a).forEach(function(c){b.setProperty(c,a.getPropertyValue(c),a.getPropertyPriority(c))})}a.cssText?b.cssText=a.cssText:c(a,b)}c(window.getComputedStyle(a),b.style)}function d(){function c(c){function d(a,b,c){function d(a){var b=a.getPropertyValue("content");return a.cssText+" content: "+b+";"}function e(a){function b(b){return b+": "+a.getPropertyValue(b)+(a.getPropertyPriority(b)?" !important":"")}return q.asArray(a).map(b).join("; ")+";"}var f="."+a+":"+b,g=c.cssText?d(c):e(c);return document.createTextNode(f+"{"+g+"}")}var e=window.getComputedStyle(a,c),f=e.getPropertyValue("content");if(""!==f&&"none"!==f){var g=q.uid();b.className=b.className+" "+g;var h=document.createElement("style");h.appendChild(d(g,c,e)),b.appendChild(h)}}[":before",":after"].forEach(function(a){c(a)})}function e(){a instanceof HTMLTextAreaElement&&(b.innerHTML=a.value),a instanceof HTMLInputElement&&b.setAttribute("value",a.value)}function f(){b instanceof SVGElement&&(b.setAttribute("xmlns","http://www.w3.org/2000/svg"),b instanceof SVGRectElement&&["width","height"].forEach(function(a){var c=b.getAttribute(a);c&&b.style.setProperty(a,c)}))}return b instanceof Element?Promise.resolve().then(c).then(d).then(e).then(f).then(function(){return b}):b}return c||!b||b(a)?Promise.resolve(a).then(d).then(function(c){return e(a,c,b)}).then(function(b){return f(a,b)}):Promise.resolve()}function j(a){return s.resolveAll().then(function(b){var c=document.createElement("style");return a.appendChild(c),c.appendChild(document.createTextNode(b)),a})}function k(a){return t.inlineAll(a).then(function(){return a})}function l(a,b,c){return Promise.resolve(a).then(function(a){return a.setAttribute("xmlns","http://www.w3.org/1999/xhtml"),(new XMLSerializer).serializeToString(a)}).then(q.escapeXhtml).then(function(a){return'<foreignObject x="0" y="0" width="100%" height="100%">'+a+"</foreignObject>"}).then(function(a){return'<svg xmlns="http://www.w3.org/2000/svg" width="'+b+'" height="'+c+'">'+a+"</svg>"}).then(function(a){return"data:image/svg+xml;charset=utf-8,"+a})}function m(){function a(){var a="application/font-woff",b="image/jpeg";return{woff:a,woff2:a,ttf:"application/font-truetype",eot:"application/vnd.ms-fontobject",png:"image/png",jpg:b,jpeg:b,gif:"image/gif",tiff:"image/tiff",svg:"image/svg+xml"}}function b(a){var b=/\.([^\.\/]*?)$/g.exec(a);return b?b[1]:""}function c(c){var d=b(c).toLowerCase();return a()[d]||""}function d(a){return a.search(/^(data:)/)!==-1}function e(a){return new Promise(function(b){for(var c=window.atob(a.toDataURL().split(",")[1]),d=c.length,e=new Uint8Array(d),f=0;f<d;f++)e[f]=c.charCodeAt(f);b(new Blob([e],{type:"image/png"}))})}function f(a){return a.toBlob?new Promise(function(b){a.toBlob(b)}):e(a)}function g(a,b){var c=document.implementation.createHTMLDocument(),d=c.createElement("base");c.head.appendChild(d);var e=c.createElement("a");return c.body.appendChild(e),d.href=b,e.href=a,e.href}function h(){var a=0;return function(){function b(){return("0000"+(Math.random()*Math.pow(36,4)<<0).toString(36)).slice(-4)}return"u"+b()+a++}}function i(a){return new Promise(function(b,c){var d=new Image;d.onload=function(){b(d)},d.onerror=c,d.src=a})}function j(a){var b=3e4;return v.impl.options.cacheBust&&(a+=(/\?/.test(a)?"&":"?")+(new Date).getTime()),new Promise(function(c){function d(){if(4===g.readyState){if(200!==g.status)return void(h?c(h):f("cannot fetch resource: "+a+", status: "+g.status));var b=new FileReader;b.onloadend=function(){var a=b.result.split(/,/)[1];c(a)},b.readAsDataURL(g.response)}}function e(){h?c(h):f("timeout of "+b+"ms occured while fetching resource: "+a)}function f(a){console.error(a),c("")}var g=new XMLHttpRequest;g.onreadystatechange=d,g.ontimeout=e,g.responseType="blob",g.timeout=b,g.open("GET",a,!0),g.send();var h;if(v.impl.options.imagePlaceholder){var i=v.impl.options.imagePlaceholder.split(/,/);i&&i[1]&&(h=i[1])}})}function k(a,b){return"data:"+b+";base64,"+a}function l(a){return a.replace(/([.*+?^${}()|\[\]\/\\])/g,"\\$1")}function m(a){return function(b){return new Promise(function(c){setTimeout(function(){c(b)},a)})}}function n(a){for(var b=[],c=a.length,d=0;d<c;d++)b.push(a[d]);return b}function o(a){return a.replace(/#/g,"%23").replace(/\n/g,"%0A")}function p(a){var b=r(a,"border-left-width"),c=r(a,"border-right-width");return a.scrollWidth+b+c}function q(a){var b=r(a,"border-top-width"),c=r(a,"border-bottom-width");return a.scrollHeight+b+c}function r(a,b){var c=window.getComputedStyle(a).getPropertyValue(b);return parseFloat(c.replace("px",""))}return{escape:l,parseExtension:b,mimeType:c,dataAsUrl:k,isDataUrl:d,canvasToBlob:f,resolveUrl:g,getAndEncode:j,uid:h(),delay:m,asArray:n,escapeXhtml:o,makeImage:i,width:p,height:q}}function n(){function a(a){return a.search(e)!==-1}function b(a){for(var b,c=[];null!==(b=e.exec(a));)c.push(b[1]);return c.filter(function(a){return!q.isDataUrl(a)})}function c(a,b,c,d){function e(a){return new RegExp("(url\\(['\"]?)("+q.escape(a)+")(['\"]?\\))","g")}return Promise.resolve(b).then(function(a){return c?q.resolveUrl(a,c):a}).then(d||q.getAndEncode).then(function(a){return q.dataAsUrl(a,q.mimeType(b))}).then(function(c){return a.replace(e(b),"$1"+c+"$3")})}function d(d,e,f){function g(){return!a(d)}return g()?Promise.resolve(d):Promise.resolve(d).then(b).then(function(a){var b=Promise.resolve(d);return a.forEach(function(a){b=b.then(function(b){return c(b,a,e,f)})}),b})}var e=/url\(['"]?([^'"]+?)['"]?\)/g;return{inlineAll:d,shouldProcess:a,impl:{readUrls:b,inline:c}}}function o(){function a(){return b(document).then(function(a){return Promise.all(a.map(function(a){return a.resolve()}))}).then(function(a){return a.join("\n")})}function b(){function a(a){return a.filter(function(a){return a.type===CSSRule.FONT_FACE_RULE}).filter(function(a){return r.shouldProcess(a.style.getPropertyValue("src"))})}function b(a){var b=[];return a.forEach(function(a){try{q.asArray(a.cssRules||[]).forEach(b.push.bind(b))}catch(c){console.log("Error while reading CSS rules from "+a.href,c.toString())}}),b}function c(a){return{resolve:function(){var b=(a.parentStyleSheet||{}).href;return r.inlineAll(a.cssText,b)},src:function(){return a.style.getPropertyValue("src")}}}return Promise.resolve(q.asArray(document.styleSheets)).then(b).then(a).then(function(a){return a.map(c)})}return{resolveAll:a,impl:{readAll:b}}}function p(){function a(a){function b(b){return q.isDataUrl(a.src)?Promise.resolve():Promise.resolve(a.src).then(b||q.getAndEncode).then(function(b){return q.dataAsUrl(b,q.mimeType(a.src))}).then(function(b){return new Promise(function(c,d){a.onload=c,a.onerror=d,a.src=b})})}return{inline:b}}function b(c){function d(a){var b=a.style.getPropertyValue("background");return b?r.inlineAll(b).then(function(b){a.style.setProperty("background",b,a.style.getPropertyPriority("background"))}).then(function(){return a}):Promise.resolve(a)}return c instanceof Element?d(c).then(function(){return c instanceof HTMLImageElement?a(c).inline():Promise.all(q.asArray(c.childNodes).map(function(a){return b(a)}))}):Promise.resolve(c)}return{inlineAll:b,impl:{newImage:a}}}var q=m(),r=n(),s=o(),t=p(),u={imagePlaceholder:void 0,cacheBust:!1},v={toSvg:b,toPng:d,toJpeg:e,toBlob:f,toPixelData:c,impl:{fontFaces:s,images:t,util:q,inliner:r,options:{}}};"undefined"!=typeof module?module.exports=v:a.domtoimage=v}(this);</script>
+<script>
+
+	function caption_click(){
+		
+	var node = document.getElementById('caption');
+    domtoimage.toPng(node).then(function (dataUrl) {
+  
+        var img = new Image();
+        
+        img.src = dataUrl;
+        img.onload = function(){
+					var captioned_line_drawing=document.getElementById("captioned-line-drawing");
+	var captioned_line_drawingctx = captioned_line_drawing.getContext("2d"); captioned_line_drawingctx.drawImage(img,0,0, img.width, img.height);
+          var meme = document.getElementById("output");
+          var image_string = captioned_line_drawing.toDataURL();
+          output.src= image_string;
+          
+				};
+			});
+		};
+		
+		
+	</script>
+			
