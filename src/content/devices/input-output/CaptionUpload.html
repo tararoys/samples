@@ -425,7 +425,7 @@ function drawGrayPixel(img, i, alpha, output) {
         
         img.src = dataUrl;
         img.onload = function(){
-					var captioned_line_drawing=document.getElementById("captioned-line-drawing");
+					var captioned_line_drawing=document.getElementById("original-image");
 	var captioned_line_drawingctx = captioned_line_drawing.getContext("2d"); captioned_line_drawingctx.drawImage(img,0,0, img.width, img.height);
           var meme = document.getElementById("output");
           var image_string = captioned_line_drawing.toDataURL();
