@@ -1,4 +1,4 @@
-hi<!DOCTYPE html >
+<!DOCTYPE html >
 <!--git add
  *  Copyright (c) 2015 The WebRTC project authors. All Rights Reserved.
  *
@@ -213,12 +213,8 @@ function start() {
   const videoSource = videoSelect.value;
   const constraints = {
     //audio: {deviceId: audioSource ? {exact: audioSource} : undefined},
-    video: {
-      deviceId: videoSource,
-      width: {exact: 1280}, 
-      height: {exact: 720}
-};
-    //advanced:[{focusMode:'manual', focusDistance:0.33}]
+    video: {deviceId: videoSource ? {exact: videoSource} : undefined},
+    advanced:[{focusMode:'manual', focusDistance:0.33}]
   };
   console.log('hello world')
   console.log(navigator.mediaDevices.getSupportedConstraints());
@@ -390,7 +386,6 @@ console.log("button was clicked");
 
 canvas.width = stream.getVideoTracks()[0].getSettings().width ;
 canvas.height = stream.getVideoTracks()[0].getSettings().height ;
-alert(canvas.width);
 var node = document.getElementById('caption');
 node.width = canvas.width
 node.height= canvas.height
@@ -733,11 +728,11 @@ function drawGrayPixel(img, i, alpha, output) {
 <img id='p1' src="photo-1.jpeg" hidden>
 <img id = 'p2' src="photo-2.jpeg" hidden>
 
-<canvas id="imagecan1" width="1500" height="2000" hidden></canvas>
+<canvas id="imagecan1" width="750" height="1000" hidden></canvas>
 
-<canvas id="imagecan2" style="width:100%" width="1500" height="2000" hidden ></canvas>
+<canvas id="imagecan2" style="width:100%" width="750" height="1000" hidden ></canvas>
 
-<canvas id="diff" style="width:100%" width="1500" height="2000" hidden></canvas>
+<canvas id="diff" style="width:100%" width="750" height="1000" hidden></canvas>
 
 
 
