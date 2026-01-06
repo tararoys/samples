@@ -224,7 +224,7 @@ function start() {
     //advanced:[{focusMode:'manual', focusDistance:0.33}]
   };
   console.log('hello world')
-  console.log(navigator.mediaDevices.getSupportedConstraints());
+  alert(navigator.mediaDevices.getSupportedConstraints());
   
   navigator.mediaDevices.getUserMedia(constraints).then(gotStream).then(gotDevices).catch(handleError);
 }
