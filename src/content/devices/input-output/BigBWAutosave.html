@@ -214,13 +214,10 @@ function start() {
   const constraints = {
     //audio: {deviceId: audioSource ? {exact: audioSource} : undefined},
     video: {
-      mandatory: {
-                            maxWidth: 1024,
-                            maxHeight: 768,
-                            minWidth: 1024,
-                            minHeight: 768
-                             },
       deviceId: videoSource ? {exact: videoSource} : undefined},
+      width: {exact: 1280}, 
+      height: {exact: 720}
+};
     //advanced:[{focusMode:'manual', focusDistance:0.33}]
   };
   console.log('hello world')
