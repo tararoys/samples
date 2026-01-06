@@ -214,8 +214,8 @@ function start() {
   const constraints = {
     //audio: {deviceId: audioSource ? {exact: audioSource} : undefined},
 
-    video: {width: {exact: 1280}, height: {exact: 720}}, deviceId: videoSource ? {exact: videoSource} : undefined},
-    advanced:[{focusMode:'manual', focusDistance:0.33}]
+    video: {width: {exact: 1280}, height: {exact: 720}, deviceId: videoSource ? {exact: videoSource} : undefined}
+    //advanced:[{focusMode:'manual', focusDistance:0.33}]
   };
   console.log('hello world')
   console.log(navigator.mediaDevices.getSupportedConstraints());
